@@ -36,9 +36,11 @@
             display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; margin: 20px 0;
             scrollbar-width: thin; scrollbar-color: #a90000 #eee;
         }
+        /* Hem resim hem video için ortak stil */
         .media-item {
             height: 200px; width: auto; border-radius: 8px; flex-shrink: 0; cursor: pointer;
             transition: transform 0.2s; object-fit: cover;
+            background: #000; /* Videoların arkası siyah olsun */
         }
         .media-item:hover { transform: scale(1.02); }
 
@@ -49,7 +51,6 @@
         .comment-input-area textarea { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
         .comment-btn { background: #a90000; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; }
         
-        /* Dinamik Yüklenen Etkinlikler İçin (Yeşil Çizgi Yok) */
         #dynamic-events-container article { border-left: none; }
     </style>
 </head>
@@ -116,104 +117,7 @@
             </div>
         </article>
 
-        <article class="post" data-post-id="post2">
-            <h2>22 MART DÜNYA SU GÜNÜ PANELİ</h2>
-            <span class="meta">Yazar: Alper YAMAN | Tarih: 26 Mart 2025</span>
-            <p>Erimekte Olan Geleceğimiz! Bir buzdağı yok olduğunda sadece su kaybolmaz, bir ekosistem, bir yaşam, bir gelecek de kaybolur…</p>
-            <div class="media-scroller gallery-group">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(1).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(2).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(3).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(4).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(5).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(6).jpg" class="media-item">
-            </div>
-            <div class="comment-section">
-                <h4>Yorumlar</h4>
-                <ul class="comments-list" id="comments-post2"></ul>
-                <div class="comment-input-area">
-                    <textarea id="comment-input-post2" placeholder="Yorum yaz..."></textarea>
-                    <button class="comment-btn" onclick="submitComment('post2')">Gönder</button>
-                </div>
-            </div>
-        </article>
-
-        <article class="post" data-post-id="post3">
-            <h2>BÖLÜM KAHVALTISI</h2>
-            <span class="meta">Yazar: Alper YAMAN | Tarih: 29 Aralık 2024</span>
-            <p>Biyoloji bölümü olarak düzenlediğimiz kahvaltı etkinliği ile yılı kapatıyoruz ✨</p>
-            <div class="media-scroller gallery-group">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(1).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(2).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(3).jpg" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(4).jpg" class="media-item">
-            </div>
-            <div class="comment-section">
-                <h4>Yorumlar</h4>
-                <ul class="comments-list" id="comments-post3"></ul>
-                <div class="comment-input-area">
-                    <textarea id="comment-input-post3" placeholder="Yorum yaz..."></textarea>
-                    <button class="comment-btn" onclick="submitComment('post3')">Gönder</button>
-                </div>
-            </div>
-        </article>
-
-        <article class="post" data-post-id="post4">
-            <h2>BIOINNOVATION 2024</h2>
-            <span class="meta">Yazar: Alper YAMAN | Tarih: 5 Mayıs 2024</span>
-            <div class="media-scroller gallery-group">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(1).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(2).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(3).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(4).webp" class="media-item">
-            </div>
-            <div class="comment-section">
-                <h4>Yorumlar</h4>
-                <ul class="comments-list" id="comments-post4"></ul>
-                <div class="comment-input-area">
-                    <textarea id="comment-input-post4" placeholder="Yorum yaz..."></textarea>
-                    <button class="comment-btn" onclick="submitComment('post4')">Gönder</button>
-                </div>
-            </div>
-        </article>
-
-        <article class="post" data-post-id="post5">
-            <h2>SÖZDE BİLİM KONFERANSI</h2>
-            <span class="meta">Yazar: Alper YAMAN | Tarih: 4 Aralık 2023</span>
-            <div class="media-scroller gallery-group">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(2).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(3).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(4).webp" class="media-item">
-            </div>
-            <div class="comment-section">
-                <h4>Yorumlar</h4>
-                <ul class="comments-list" id="comments-post5"></ul>
-                <div class="comment-input-area">
-                    <textarea id="comment-input-post5" placeholder="Yorum yaz..."></textarea>
-                    <button class="comment-btn" onclick="submitComment('post5')">Gönder</button>
-                </div>
-            </div>
-        </article>
-
-        <article class="post" data-post-id="post6">
-            <h2>ILGAZ DAĞI MANTAR YÜRÜYÜŞÜ</h2>
-            <span class="meta">Yazar: Alper YAMAN | Tarih: 25 Ekim 2023</span>
-            <div class="media-scroller gallery-group">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(1).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(2).webp" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(3).webp" class="media-item">
-            </div>
-            <div class="comment-section">
-                <h4>Yorumlar</h4>
-                <ul class="comments-list" id="comments-post6"></ul>
-                <div class="comment-input-area">
-                    <textarea id="comment-input-post6" placeholder="Yorum yaz..."></textarea>
-                    <button class="comment-btn" onclick="submitComment('post6')">Gönder</button>
-                </div>
-            </div>
-        </article>
-
-    </main>
+        </main>
 
     <footer>
         <p>&copy; 2025 BBAT, Kastamonu Üniversitesine Bağlı Bir Öğrenci Topluluğudur.</p>
@@ -254,11 +158,12 @@
             if (!group) {
                 currentGalleryImages = [imgElement];
             } else {
+                // Sadece resimleri (IMG tagi olanları) lightboxta gösterelim
                 currentGalleryImages = Array.from(group.querySelectorAll('img.media-item'));
             }
 
             const index = currentGalleryImages.indexOf(imgElement);
-            if(index === -1) return;
+            if(index === -1) return; // Videolara tıklayınca lightbox açılmasın
             
             currentIndex = index;
             updateLightboxImage();
@@ -340,7 +245,7 @@
             auth.signOut().then(() => window.location.reload());
         });
 
-        // --- YENİ: ÇOKLU FOTOĞRAF DESTEĞİ İLE VERİ ÇEKME ---
+        // --- DİNAMİK ETKİNLİKLERİ ÇEKME (VİDEO DESTEKLİ) ---
         db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').onSnapshot(snapshot => {
             const container = document.getElementById('dynamic-events-container');
             container.innerHTML = ""; // Temizle
@@ -349,23 +254,43 @@
                 const data = doc.data();
                 const postId = doc.id; 
 
-                // Resimleri Döngüyle Ekle
+                // Resimleri ve Videoları Ayırt Et
                 let imagesHTML = '';
                 
-                // Eğer "galeri" dizisi varsa ve doluysa onu kullan
+                // Helper fonksiyon: Dosya uzantısına göre Video mu?
+                function isVideo(url) {
+                    return url.match(/\.(mp4|webm|ogg)$/i);
+                }
+
                 if (data.galeri && Array.isArray(data.galeri) && data.galeri.length > 0) {
                     imagesHTML = `<div class="media-scroller gallery-group">`;
-                    data.galeri.forEach(imgSrc => {
-                        imagesHTML += `<img src="${imgSrc}" class="media-item" onclick="showImage(this)">`;
+                    data.galeri.forEach(link => {
+                        if (isVideo(link)) {
+                            // Video ise <video> etiketi bas
+                            imagesHTML += `
+                                <video class="media-item" controls>
+                                    <source src="${link}" type="video/mp4">
+                                    Tarayıcınız bu videoyu desteklemiyor.
+                                </video>`;
+                        } else {
+                            // Resim ise <img> etiketi bas
+                            imagesHTML += `<img src="${link}" class="media-item" onclick="showImage(this)">`;
+                        }
                     });
                     imagesHTML += `</div>`;
                 } 
-                // Eski usul sadece "kapakResmi" varsa onu kullan
                 else if (data.kapakResmi && data.kapakResmi.length > 5) {
-                    imagesHTML = `
-                    <div class="media-scroller gallery-group">
-                        <img src="${data.kapakResmi}" class="media-item" onclick="showImage(this)"> 
-                    </div>`;
+                    if(isVideo(data.kapakResmi)) {
+                         imagesHTML = `
+                        <div class="media-scroller gallery-group">
+                            <video class="media-item" controls><source src="${data.kapakResmi}" type="video/mp4"></video>
+                        </div>`;
+                    } else {
+                        imagesHTML = `
+                        <div class="media-scroller gallery-group">
+                            <img src="${data.kapakResmi}" class="media-item" onclick="showImage(this)"> 
+                        </div>`;
+                    }
                 }
 
                 const eventHTML = `
@@ -408,7 +333,7 @@
             } catch (err) { alert("Yorum hatası: " + err.message); }
         };
 
-        // GÜVENLİ YORUM LİSTELEME
+        // Yorumları Listeleme
         function listenForComments(postId) {
             db.collection("comments").where("postId", "==", postId)
               .onSnapshot((snap) => {
