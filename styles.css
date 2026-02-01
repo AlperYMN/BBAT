@@ -452,22 +452,22 @@ footer {
     align-items: flex-start; /* Üstten hizala */
 }
 
-/* Medya (Resim veya Video) Alanı */
+/* Medya (Resim veya Video) Alanı - KÜÇÜLTÜLDÜ */
 .duyuru-media-container {
-    flex: 0 0 280px; /* Genişliği 280px'e sabitle */
-    max-width: 40%; /* Ama ekranın %40'ını da geçmesin */
+    flex: 0 0 160px; /* Eskiden 280px idi, şimdi 160px (Çok daha küçük) */
+    max-width: 30%;  /* Genişlik sınırlaması */
 }
 
 /* Medyanın kendisi */
 .duyuru-media {
     width: 100%;
-    height: auto;
+    height: auto; /* En boy oranını koru */
+    max-height: 250px; /* Çok uzun (dikey) videoların sayfayı uzatmasını engelle */
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: block;
-    object-fit: cover;
-    /* Videoların GIF gibi görünmesi için arka plan siyah */
-    background: #000; 
+    object-fit: cover; /* Kutunun içine tam otursun */
+    background: #000;
 }
 
 /* Metin Alanı */
