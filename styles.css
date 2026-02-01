@@ -344,36 +344,97 @@ footer {
     border-top: 4px solid var(--primary-red);
 }
 
-/* Mobil */
+/* --- RESPONSIVE (MOBİL AYARLAR) --- */
 @media (max-width: 900px) {
-    header { padding: 15px; }
-    .menu-toggle { display: block; }
+    header { 
+        padding: 15px 20px; 
+    }
+    
+    .menu-toggle { 
+        display: block; 
+        font-size: 1.8rem;
+        cursor: pointer;
+    }
+    
     .nav-links {
         display: none;
         position: absolute;
-        top: 100%; left: 0; width: 100%;
+        top: 100%; /* Header'ın hemen altından başla */
+        left: 0;
+        width: 100%; /* Ekranı tam kapla */
         background: var(--white);
-        flex-direction: column; padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        flex-direction: column;
+        padding: 20px;
+        
+        /* BU SATIR TAŞMAYI ENGELLER: */
+        box-sizing: border-box; 
+        
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         border-top: 3px solid var(--primary-red);
+        z-index: 1000;
     }
-    .nav-links.active { display: flex; }
-    .nav-links ul { flex-direction: column; width: 100%; text-align: center; }
-    .brand-container img { height: 40px; }
-    .site-title h1 { font-size: 0.8rem; }
-    .mission-vision-container { grid-template-columns: 1fr; }
-    .auth-buttons-container { flex-direction: column; width: 100%; }
-    .btn { width: 100%; }
-    .hero-content h1 { font-size: 1.8rem; }
     
-    /* WhatsApp Mobil */
+    .nav-links.active { 
+        display: flex; 
+    }
+    
+    .nav-links ul { 
+        flex-direction: column; 
+        width: 100%; 
+        text-align: center; 
+        gap: 15px;
+        padding: 0;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .brand-container img { 
+        height: 45px; /* Mobilde logolar biraz küçülsün */
+    }
+    
+    .site-title h1 { 
+        font-size: 0.9rem; /* Yazı mobilde sığsın */
+    }
+    
+    .mission-vision-container { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .auth-buttons-container { 
+        flex-direction: column; 
+        width: 100%; 
+        gap: 10px;
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    .btn { 
+        width: 100%; 
+        box-sizing: border-box; /* Butonların da taşmasını engeller */
+    }
+    
+    .hero-content h1 { 
+        font-size: 1.8rem; 
+    }
+    
+    /* WhatsApp Mobilde Düzgün Görünsün */
     .whatsapp-card {
         flex-direction: column;
         text-align: center;
         padding: 20px;
     }
+    
+    .wa-icon img {
+        margin-bottom: 10px;
+    }
+    
     .btn-whatsapp {
         width: 100%;
+        margin-top: 10px;
         box-sizing: border-box;
     }
 }
