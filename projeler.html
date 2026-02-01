@@ -3,1167 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BBAT</title>
+    <title>Etkinliklerimiz - BBAT</title>
     <link rel="icon" href="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Quicksand:wght@400&display=swap" rel="stylesheet">
     
-    <!-- Lightbox Stil -->
     <style>
+        /* Lightbox & Galeri */
         .lightbox-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); display: none;
+            justify-content: center; align-items: center; z-index: 9999;
         }
         .lightbox-overlay img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 5px solid white;
-            border-radius: 10px;
+            max-width: 90%; max-height: 90%; border: 5px solid white; border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
         .lightbox-controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            pointer-events: none;
+            position: absolute; top: 50%; width: 100%; display: flex;
+            justify-content: space-between; transform: translateY(-50%); pointer-events: none;
         }
         .lightbox-controls button {
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
-            font-size: 2rem;
-            padding: 10px;
-            margin: 0 20px;
-            border-radius: 50%;
-            cursor: pointer;
-            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.1); color: white; border: none;
+            font-size: 3rem; padding: 20px; cursor: pointer; pointer-events: auto;
+            transition: background 0.3s;
         }
+        .lightbox-controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .media-scroller {
+            display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; margin: 20px 0;
+            scrollbar-width: thin; scrollbar-color: #a90000 #eee;
+        }
+        .media-item {
+            height: 200px; width: auto; border-radius: 8px; flex-shrink: 0; cursor: pointer;
+            transition: transform 0.2s; object-fit: cover;
+        }
+        .media-item:hover { transform: scale(1.02); }
+
+        .comment-section { margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; }
+        .comments-list { list-style: none; padding: 0; max-height: 200px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 8px;}
+        .comments-list li { padding: 5px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .comment-input-area { display: flex; gap: 10px; margin-top: 10px; }
+        .comment-input-area textarea { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+        .comment-btn { background: #a90000; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; }
     </style>
 </head>
 
-<header>
-    <div class="unilogo">
-        <img src="https://github.com/Riwelda/BBAT/blob/main/unilogo.jpg?raw=true" alt="unilogo">
-    </div>
-    <h1>BİYOLOJİK BİLİMLER ARAŞTIRMA TOPLULUĞU</h1>
-    <div class="toplogo">
-        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" alt="Üst Logo">
-    </div>
-    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-    <nav class="menu" id="menu">
-        <ul>
-          <li><a href="./">Anasayfa</a></li>
-          <li><a href="hakkimizda.html">Hakkımızda</a></li>
-          <li><a href="iletisim.html">İletişim</a></li>
-        </ul>
-    </nav>
+<body>
 
-    <div id="auth-buttons" class="auth-buttons">
-        <button id="signup-btn">Kayıt Ol</button>
-        <button id="login-btn">Giriş Yap</button>
-    </div>
-
-    <div id="user-info" class="auth-buttons" style="display: none;">
-        <span id="welcome-text"></span>
-        <button id="logout-btn">Çıkış Yap</button>
-    </div>
-   
-</header>
-
-
-
-<main>
-    <div class="photo-strip">
-        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/fenfak.jpeg" alt="Etkinlik Fotoğrafı">
-    </div>
-
-
-    <article>
-
-      <h2> CİDE TOPLULUK BAŞKANLARI TOPLANTISI </h2>
-      <p class="meta">Yazar: Alper YAMAN | Tarih: 5 Haziran 2025</p>
-      <p> Biyolojik Bilimler Araştırma Topluluğu olarak, 2-3 Haziran topluluk başkanları toplantısına katılım sağladık. Sayın Rektörümüz Prof. Dr. Ahmet Hamdi TOPAL ve Sağlık, Kültür ve Spor Daire Başkanlığına bu değerli program için teşekkür ederiz. </p>
-      
-       <div class="etkinlik-container">
-              <div class="etkinlik-fotograflar">
-                <video controls width="300">
-                  <source src="https://github.com/Riwelda/BBAT/raw/refs/heads/main/bt1.mp4" type="video/mp4">
-                </video>
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bt2.jpg" alt="Etkinlik 2">
-                <video controls width="300">
-                  <source src="https://github.com/Riwelda/BBAT/raw/refs/heads/main/bt3.mp4" type="video/mp4">
-                </video>
-                  <!-- Görsellerin tekrar etmesi için ikinci set -->
-                  <video controls width="300">
-                    <source src="https://github.com/Riwelda/BBAT/raw/refs/heads/main/bt1.mp4" type="video/mp4">
-                  </video>
-                  <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bt2.jpg" alt="Etkinlik 2">
-                  <video controls width="300">
-                    <source src="https://github.com/Riwelda/BBAT/raw/refs/heads/main/bt3.mp4" type="video/mp4">
-                  </video>
- 
-              </div>
-          </div>
-
-            <div class="post" data-post-id="post1">
-
-              <style>
-                .comment-section {
-                  margin-top: 20px;
-                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                }
-            
-                .comments-list {
-                  list-style: none;
-                  padding: 0;
-                  max-height: 250px;
-                  overflow-y: auto;
-                  margin-bottom: 15px;
-                  border: 1px solid #ddd;
-                  border-radius: 6px;
-                  background: #fafafa;
-                }
-            
-                .comments-list li {
-                  padding: 10px 15px;
-                  border-bottom: 1px solid #eee;
-                  font-size: 14px;
-                  color: #333;
-                }
-            
-                .comments-list li:last-child {
-                  border-bottom: none;
-                }
-            
-                .comment-input-area {
-                  display: flex;
-                  gap: 10px;
-                }
-            
-                .comment-input-area textarea {
-                  flex-grow: 1;
-                  padding: 10px;
-                  font-size: 14px;
-                  border-radius: 6px;
-                  border: 1px solid #ccc;
-                  resize: vertical;
-                  min-height: 60px;
-                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                }
-            
-                .comment-input-area button {
-                  background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                  border: none;
-                  color: white;
-                  font-weight: 600;
-                  padding: 0 20px;
-                  border-radius: 6px;
-                  cursor: pointer;
-                  transition: background-color 0.3s ease;
-                  font-size: 14px;
-                }
-            
-                .comment-input-area button:hover {
-                  background-color: #0056b3;
-                }
-              </style>
-            
-            <div class="comment-section" data-post-id="post1">
-              <ul class="comments-list" id="comments-post1">
-                <!-- Yorumlar burada -->
-              </ul>
-            
-              <div class="comment-input-area">
-                <textarea id="comment-input-post1" placeholder="Yorumunuzu yazınız..."></textarea>
-                <button onclick="submitComment('post1')">Gönder</button>
-              </div>
+    <header>
+        <div class="brand-container">
+            <img src="https://github.com/Riwelda/BBAT/blob/main/unilogo.jpg?raw=true" alt="Kastamonu Üni Logo">
+            <div class="site-title" style="margin: 0 15px; text-align:center;">
+                <h1>BİYOLOJİK BİLİMLER<br>ARAŞTIRMA TOPLULUĞU</h1>
             </div>
-            
-              
-                
-              </div>
-              
-              
-            </div>
-           
-            
-            
-      </article>
-
-
-
-
-
-
-
-      
-    <article>
-
-        <h2> 22 MART DÜNYA SU GÜNÜ PANELİ </h2>
-        <p class="meta">Yazar: Alper YAMAN | Tarih: 26 Mart 2025</p>
-        <p>Erimekte Olan Geleceğimiz!
-            Bir buzdağı yok olduğunda sadece su kaybolmaz, bir ekosistem, bir yaşam, bir gelecek de kaybolur…
-            Dünya Su Günü’nde buzulların erimesine dikkat çekmek için düzenlediğimiz panel ve sergi ile küresel ısınmanın etkilerini konuşuyoruz. Doğa susuyor ama biz konuşmalıyız! Gel, birlikte farkındalık yaratalım.” 22 Mart Dünya Su Günü kapsamında düzenlediğimiz ‘Buzulların Erimesi’ konulu panel ve sergimizle, iklim krizinin su kaynaklarımıza olan etkisine dikkat çekmeyi amaçladık. Bu anlamlı etkinlikte bizlerle olup değerli bilgi ve deneyimlerini paylaşan hocalarımıza ve yoğun ilgi gösteren tüm katılımcılarımıza gönülden teşekkür ederiz. Birlikte farkındalık yaratmak ve geleceğimize sahip çıkmak için çalışmaya devam edeceğiz.</p>
-        
-         <div class="etkinlik-container">
-                <div class="etkinlik-fotograflar">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(1).jpg" alt="Etkinlik 1">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(2).jpg" alt="Etkinlik 2">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(3).jpg" alt="Etkinlik 3">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(4).jpg" alt="Etkinlik 4">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(5).jpg" alt="Etkinlik 5">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(6).jpg" alt="Etkinlik 6">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(7).jpg" alt="Etkinlik 7">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(8).jpg" alt="Etkinlik 8">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(9).jpg" alt="Etkinlik 9">
-                    <!-- Görsellerin tekrar etmesi için ikinci set -->
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(1).jpg" alt="Etkinlik 1">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(2).jpg" alt="Etkinlik 2">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(3).jpg" alt="Etkinlik 3">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(4).jpg" alt="Etkinlik 4">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(5).jpg" alt="Etkinlik 5">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(6).jpg" alt="Etkinlik 6">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(7).jpg" alt="Etkinlik 7">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(8).jpg" alt="Etkinlik 8">
-                    <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(9).jpg" alt="Etkinlik 9"> 
+            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" alt="BBAT Logo">
+        </div>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <nav class="nav-links" id="nav-links">
+            <ul>
+                <li><a href="index.html">Anasayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                <li><a href="projeler.html">Etkinlikler</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+            <div class="auth-buttons-container">
+                <div id="auth-buttons" style="display: flex; gap: 10px;">
+                    <button id="login-btn" class="btn btn-outline">Giriş Yap</button>
+                    <button id="signup-btn" class="btn btn-primary">Kayıt Ol</button>
+                </div>
+                <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+                    <span id="welcome-text" style="font-weight: bold; color: #a90000; font-size: 0.9rem;"></span>
+                    <button id="logout-btn" class="btn btn-primary" style="background-color: #333;">Çıkış</button>
                 </div>
             </div>
+        </nav>
+    </header>
 
-           
-        
+    <main>
+        <div class="hero-wrapper">
+            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/fenfak.jpeg" alt="Etkinlikler" class="hero-img">
+            <div class="hero-content">
+                <h1>Etkinliklerimiz</h1>
+                <p>Geçmişten günümüze BBAT faaliyetleri</p>
+            </div>
+        </div>
 
-            <div class="post" data-post-id="post1">
+        <div id="dynamic-events-container">
+            </div>
 
-                <style>
-                  .comment-section {
-                    margin-top: 20px;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                  }
-              
-                  .comments-list {
-                    list-style: none;
-                    padding: 0;
-                    max-height: 250px;
-                    overflow-y: auto;
-                    margin-bottom: 15px;
-                    border: 1px solid #ddd;
-                    border-radius: 6px;
-                    background: #fafafa;
-                  }
-              
-                  .comments-list li {
-                    padding: 10px 15px;
-                    border-bottom: 1px solid #eee;
-                    font-size: 14px;
-                    color: #333;
-                  }
-              
-                  .comments-list li:last-child {
-                    border-bottom: none;
-                  }
-              
-                  .comment-input-area {
-                    display: flex;
-                    gap: 10px;
-                  }
-              
-                  .comment-input-area textarea {
-                    flex-grow: 1;
-                    padding: 10px;
-                    font-size: 14px;
-                    border-radius: 6px;
-                    border: 1px solid #ccc;
-                    resize: vertical;
-                    min-height: 60px;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                  }
-              
-                  .comment-input-area button {
-                    background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                    border: none;
-                    color: white;
-                    font-weight: 600;
-                    padding: 0 20px;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    transition: background-color 0.3s ease;
-                    font-size: 14px;
-                  }
-              
-                  .comment-input-area button:hover {
-                    background-color: #0056b3;
-                  }
-                </style>
-              
-              <div class="comment-section" data-post-id="post1">
-                <ul class="comments-list" id="comments-post1">
-                  <!-- Yorumlar burada -->
-                </ul>
-              
+        <article class="post" data-post-id="post1">
+            <h2>CİDE TOPLULUK BAŞKANLARI TOPLANTISI</h2>
+            <span class="meta">Yazar: Alper YAMAN | Tarih: 5 Haziran 2025</span>
+            <p>Biyolojik Bilimler Araştırma Topluluğu olarak, 2-3 Haziran topluluk başkanları toplantısına katılım sağladık.</p>
+            <div class="media-scroller gallery-group">
+                <video class="media-item" controls><source src="https://github.com/Riwelda/BBAT/raw/refs/heads/main/bt1.mp4" type="video/mp4"></video>
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bt2.jpg" class="media-item" alt="Cide 2">
+                <video class="media-item" controls><source src="https://github.com/Riwelda/BBAT/raw/refs/heads/main/bt3.mp4" type="video/mp4"></video>
+            </div>
+            <div class="comment-section">
+                <h4>Yorumlar</h4>
+                <ul class="comments-list" id="comments-post1"></ul>
                 <div class="comment-input-area">
-                  <textarea id="comment-input-post1" placeholder="Yorumunuzu yazınız..."></textarea>
-                  <button onclick="submitComment('post1')">Gönder</button>
+                    <textarea id="comment-input-post1" placeholder="Yorum yaz..."></textarea>
+                    <button class="comment-btn" onclick="submitComment('post1')">Gönder</button>
                 </div>
-              </div>
-              
-                
-                  
-                </div>
-                
-                
-              </div>
-             
-              
-              
+            </div>
         </article>
 
-
-        <article>
-
-            <h2> BÖLÜM KAHVALTISI </h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 29 Aralık 2024</p>
-            <p>Biyoloji bölümü olarak düzenlediğimiz kahvaltı etkinliği ile yılı kapatıyoruz ✨
-                Bölüme yeni katılan arkadaşlarımıza bilgilendirmeler yapılıp tecrübelerin aktarıldığı, öğrencilerin taleplerinin ve şikayetlerinin dinlendiği, bol sohbetli ve keyifli bir etkinlik oldu.
-                Katılan hocalarımız ve arkadaşlarımıza teşekkür ederiz 💫</p>
-            
-             <div class="etkinlik-container">
-                    <div class="etkinlik-fotograflar">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(1).jpg" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(2).jpg" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(3).jpg" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(4).jpg" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(5).jpg" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(6).jpg" alt="Etkinlik 6">
-                        
-                        <!-- Görsellerin tekrar etmesi için ikinci set -->
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(1).jpg" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(2).jpg" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(3).jpg" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(4).jpg" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(5).jpg" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(6).jpg" alt="Etkinlik 6">
-                    </div>
+        <article class="post" data-post-id="post2">
+            <h2>22 MART DÜNYA SU GÜNÜ PANELİ</h2>
+            <span class="meta">Yazar: Alper YAMAN | Tarih: 26 Mart 2025</span>
+            <p>Erimekte Olan Geleceğimiz! Bir buzdağı yok olduğunda sadece su kaybolmaz, bir ekosistem, bir yaşam, bir gelecek de kaybolur…</p>
+            <div class="media-scroller gallery-group">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(1).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(2).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(3).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(4).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(5).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/panel%20(6).jpg" class="media-item">
+            </div>
+            <div class="comment-section">
+                <h4>Yorumlar</h4>
+                <ul class="comments-list" id="comments-post2"></ul>
+                <div class="comment-input-area">
+                    <textarea id="comment-input-post2" placeholder="Yorum yaz..."></textarea>
+                    <button class="comment-btn" onclick="submitComment('post2')">Gönder</button>
                 </div>
+            </div>
+        </article>
 
-
-                <div class="post" data-post-id="post2">
-
-                    <style>
-                      .comment-section {
-                        margin-top: 20px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comments-list {
-                        list-style: none;
-                        padding: 0;
-                        max-height: 250px;
-                        overflow-y: auto;
-                        margin-bottom: 15px;
-                        border: 1px solid #ddd;
-                        border-radius: 6px;
-                        background: #fafafa;
-                      }
-                  
-                      .comments-list li {
-                        padding: 10px 15px;
-                        border-bottom: 1px solid #eee;
-                        font-size: 14px;
-                        color: #333;
-                      }
-                  
-                      .comments-list li:last-child {
-                        border-bottom: none;
-                      }
-                  
-                      .comment-input-area {
-                        display: flex;
-                        gap: 10px;
-                      }
-                  
-                      .comment-input-area textarea {
-                        flex-grow: 1;
-                        padding: 10px;
-                        font-size: 14px;
-                        border-radius: 6px;
-                        border: 1px solid #ccc;
-                        resize: vertical;
-                        min-height: 60px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comment-input-area button {
-                        background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                        border: none;
-                        color: white;
-                        font-weight: 600;
-                        padding: 0 20px;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                        font-size: 14px;
-                      }
-                  
-                      .comment-input-area button:hover {
-                        background-color: #0056b3;
-                      }
-                    </style>
-                  
-                    <div class="comment-section">
-                      <ul class="comments-list" id="comments-post2">
-                        <!-- Yorumlar buraya eklenecek -->
-                      </ul>
-                  
-                      <div class="comment-input-area">
-                        <textarea id="comment-input-post2" placeholder="Yorumunuzu yazınız..."></textarea>
-                        <button onclick="submitComment('post2')">Gönder</button>
-                      </div>
-                      
-            
-                    </div>
-
-                  </div>
-                  
-            </article>
-
-
-
-        <article>
-
-            <h2> BIOINNOVATION 2024 </h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 5 Mayıs 2024</p>
-            <p>BIOINNOVATION 2024 yarışmasında bu yıl da BBAT olarak yer aldık. Fikir geliştirme kapsamında 4 aylık bir eğitim sürecinin ardından Yozgat Bozok Üniversitesi önderliğinde kamp için bir araya geldik. 50 saat boyunca minimum uyku ile çalışmalarımıza devam ettik ve projelerimizi jürilere sunduk.
-            
-                Etkinlik kapsamında kamp öncesi ve sonrasında çok değerli bilgiler edindik. Bu projede yer alan Alper YAMAN, Fatma KABAKOZ ve Melike KUYUCAKLIOĞLU arkadaşlarımıza, bu fırsatı bize sunan BIOINNOVATION ekibine, yarışma koçumuz Sudenaz YAKICI'ya, bu süreçte bize yol gösteren Rümeysa KUŞAKÇI'ya ve bize destek olan öncekilikle ailemiz ardından hocalarımız ve bölüm arkadaşlarımıza teşekkür ederiz.</p>
-            
-             <div class="etkinlik-container">
-                    <div class="etkinlik-fotograflar">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(9).webp" alt="Etkinlik 9">
-            
-                        <!-- Görsellerin tekrar etmesi için ikinci set -->
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(9).webp" alt="Etkinlik 9">
-                    </div>
+        <article class="post" data-post-id="post3">
+            <h2>BÖLÜM KAHVALTISI</h2>
+            <span class="meta">Yazar: Alper YAMAN | Tarih: 29 Aralık 2024</span>
+            <p>Biyoloji bölümü olarak düzenlediğimiz kahvaltı etkinliği ile yılı kapatıyoruz ✨</p>
+            <div class="media-scroller gallery-group">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(1).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(2).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(3).jpg" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/kahvalti%20(4).jpg" class="media-item">
+            </div>
+            <div class="comment-section">
+                <h4>Yorumlar</h4>
+                <ul class="comments-list" id="comments-post3"></ul>
+                <div class="comment-input-area">
+                    <textarea id="comment-input-post3" placeholder="Yorum yaz..."></textarea>
+                    <button class="comment-btn" onclick="submitComment('post3')">Gönder</button>
                 </div>
-            
-                <div class="post" data-post-id="post3">
+            </div>
+        </article>
 
-                    <style>
-                      .comment-section {
-                        margin-top: 20px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comments-list {
-                        list-style: none;
-                        padding: 0;
-                        max-height: 250px;
-                        overflow-y: auto;
-                        margin-bottom: 15px;
-                        border: 1px solid #ddd;
-                        border-radius: 6px;
-                        background: #fafafa;
-                      }
-                  
-                      .comments-list li {
-                        padding: 10px 15px;
-                        border-bottom: 1px solid #eee;
-                        font-size: 14px;
-                        color: #333;
-                      }
-                  
-                      .comments-list li:last-child {
-                        border-bottom: none;
-                      }
-                  
-                      .comment-input-area {
-                        display: flex;
-                        gap: 10px;
-                      }
-                  
-                      .comment-input-area textarea {
-                        flex-grow: 1;
-                        padding: 10px;
-                        font-size: 14px;
-                        border-radius: 6px;
-                        border: 1px solid #ccc;
-                        resize: vertical;
-                        min-height: 60px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comment-input-area button {
-                        background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                        border: none;
-                        color: white;
-                        font-weight: 600;
-                        padding: 0 20px;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                        font-size: 14px;
-                      }
-                  
-                      .comment-input-area button:hover {
-                        background-color: #0056b3;
-                      }
-                    </style>
-                  
-                    <div class="comment-section">
-                      <ul class="comments-list" id="comments-post3">
-                        <!-- Yorumlar buraya eklenecek -->
-                      </ul>
-                  
-                      <div class="comment-input-area">
-                        <textarea id="comment-input-post3" placeholder="Yorumunuzu yazınız..."></textarea>
-                        <button onclick="submitComment('post3')">Gönder</button>
-                      </div>
-                    </div>
-                      
-                  </div>
-
-                  
-            
-            </article>
-
-
-
-        <article>
-            <h2> SÖZDE BİLİM KONFERANSI </h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 4 Aralık 2023</p>
-            <p> "Modern teknolojinin ve internetin yaygınlaşmasının insanoğluna sunduğu en büyük fırsat bugünlerde bilimsel bilgiye herkesin ulaşabilme özgürlüğünün bulunmasıdır. Dolayısıyla insanlığın ortaya çıkışından bu yana doğasında var olan sahtekarlık ve yalan bilgiler teknolojiyle beslenmektedir." 4 Aralık Pazartesi günü gerçekleşmesini planladığımız "Sözde Bilim" Konferansı, değerli Doç. Dr. Okan ARIHAN, Fen Fakültesi Dekanı Prof. Dr. Talip ÇETER, Biyoloji Bölümü Başkanı Prof. Dr. Barış BANİ, Başkan Yardımcısı Dr. Öğr. Üyesi Zafer SANCAK ve değerli katılımcıların teşrifi ile Kastamonu Üniversitesi Bilgehan Bilgili Merkez Kütüphanesi Cemil Meriç Konferans Salonunda tamamlanmıştır. Desteklerinden dolayı teşekkür ederiz.
-            
-                Bizleri kırmayarak değerli bilgilerini paylaşan ve kitaplarımızı imzalayan değerli Doç. Dr. Okan ARIHAN'a ve diğer katılımcılara katılımları için çok teşekkür ederiz.
-                
-                Etkinlik, açılış konuşması ile başlamış ve Okan ARIHAN'ın sunumu ile devam etmiştir. Dekanımız tarafından takdim edilen hediye ve teşekkür belgesinin ardından, yazar Okan Arıhan'ın kitap imzalaması ile sona ermiştir.
-                
-                Sonraki etkinliklerde görüşmek üzere, bilimle kalın. 👋 </p>
-                <div class="etkinlik-container">
-                    <div class="etkinlik-fotograflar">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(2).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(9).webp" alt="Etkinlik 9">
-            
-                        <!-- Görsellerin tekrar etmesi için ikinci set -->
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(9).webp" alt="Etkinlik 9">
-                    </div>
+        <article class="post" data-post-id="post4">
+            <h2>BIOINNOVATION 2024</h2>
+            <span class="meta">Yazar: Alper YAMAN | Tarih: 5 Mayıs 2024</span>
+            <div class="media-scroller gallery-group">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(1).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(2).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(3).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioyeni%20(4).webp" class="media-item">
+            </div>
+            <div class="comment-section">
+                <h4>Yorumlar</h4>
+                <ul class="comments-list" id="comments-post4"></ul>
+                <div class="comment-input-area">
+                    <textarea id="comment-input-post4" placeholder="Yorum yaz..."></textarea>
+                    <button class="comment-btn" onclick="submitComment('post4')">Gönder</button>
                 </div>
+            </div>
+        </article>
 
+        <article class="post" data-post-id="post5">
+            <h2>SÖZDE BİLİM KONFERANSI</h2>
+            <span class="meta">Yazar: Alper YAMAN | Tarih: 4 Aralık 2023</span>
+            <div class="media-scroller gallery-group">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(2).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(3).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/sozdebilim%20(4).webp" class="media-item">
+            </div>
+            <div class="comment-section">
+                <h4>Yorumlar</h4>
+                <ul class="comments-list" id="comments-post5"></ul>
+                <div class="comment-input-area">
+                    <textarea id="comment-input-post5" placeholder="Yorum yaz..."></textarea>
+                    <button class="comment-btn" onclick="submitComment('post5')">Gönder</button>
+                </div>
+            </div>
+        </article>
 
-
-                <div class="post" data-post-id="post4">
-
-                    <style>
-                      .comment-section {
-                        margin-top: 20px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comments-list {
-                        list-style: none;
-                        padding: 0;
-                        max-height: 250px;
-                        overflow-y: auto;
-                        margin-bottom: 15px;
-                        border: 1px solid #ddd;
-                        border-radius: 6px;
-                        background: #fafafa;
-                      }
-                  
-                      .comments-list li {
-                        padding: 10px 15px;
-                        border-bottom: 1px solid #eee;
-                        font-size: 14px;
-                        color: #333;
-                      }
-                  
-                      .comments-list li:last-child {
-                        border-bottom: none;
-                      }
-                  
-                      .comment-input-area {
-                        display: flex;
-                        gap: 10px;
-                      }
-                  
-                      .comment-input-area textarea {
-                        flex-grow: 1;
-                        padding: 10px;
-                        font-size: 14px;
-                        border-radius: 6px;
-                        border: 1px solid #ccc;
-                        resize: vertical;
-                        min-height: 60px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comment-input-area button {
-                        background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                        border: none;
-                        color: white;
-                        font-weight: 600;
-                        padding: 0 20px;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                        font-size: 14px;
-                      }
-                  
-                      .comment-input-area button:hover {
-                        background-color: #0056b3;
-                      }
-                    </style>
-                  
-                    <div class="comment-section">
-                      <ul class="comments-list" id="comments-post4">
-                        <!-- Yorumlar buraya eklenecek -->
-                      </ul>
-                  
-                      <div class="comment-input-area">
-                        <textarea id="comment-input-post4" placeholder="Yorumunuzu yazınız..."></textarea>
-                        <button onclick="submitComment('post4')">Gönder</button>
-                      </div>
-                    </div>
-                      
-                  </div>
-
-            
-            </article>
-
-
-
-        <article>
+        <article class="post" data-post-id="post6">
             <h2>ILGAZ DAĞI MANTAR YÜRÜYÜŞÜ</h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 25 Ekim 2023</p>
-            <p>25 Ekim 2023 Çarşamba günü düzenlenen Mantar Yürüyüşünü Mikoloji alanında uzman Prof. Dr. Ilgaz AKATA hocamızın eşliğinde gerçekleştirdik.
-        
-                Bu etkinlikte emeği geçen ve bizlerle değerli bilgiler paylaşan başta Ilgaz AKATA hocamız ve ekibi olmak üzere Danışman hocamız Dr. Öğr. Üyesi İbrahim KÜÇÜKBASMACI'ya ve bölüm hocalarımızdan Prof. Dr. Ergin Murat Altuner'e teşekkür ediyoruz.
-                
-                Yeni etkinliklerde görüşmek üzere🍀
-                 </p>
-        
-        
-                 <div class="etkinlik-container">
-                    <div class="etkinlik-fotograflar">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(9).webp" alt="Etkinlik 9">
-        
-                        <!-- Görsellerin tekrar etmesi için ikinci set -->
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(9).webp" alt="Etkinlik 9">
-                    </div>
+            <span class="meta">Yazar: Alper YAMAN | Tarih: 25 Ekim 2023</span>
+            <div class="media-scroller gallery-group">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(1).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(2).webp" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/mantaretkinlik%20(3).webp" class="media-item">
+            </div>
+            <div class="comment-section">
+                <h4>Yorumlar</h4>
+                <ul class="comments-list" id="comments-post6"></ul>
+                <div class="comment-input-area">
+                    <textarea id="comment-input-post6" placeholder="Yorum yaz..."></textarea>
+                    <button class="comment-btn" onclick="submitComment('post6')">Gönder</button>
                 </div>
+            </div>
+        </article>
 
+    </main>
 
+    <footer>
+        <p>&copy; 2025 BBAT, Kastamonu Üniversitesine Bağlı Bir Öğrenci Topluluğudur.</p>
+    </footer>
 
-                <div class="post" data-post-id="post5">
-
-                    <style>
-                      .comment-section {
-                        margin-top: 20px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comments-list {
-                        list-style: none;
-                        padding: 0;
-                        max-height: 250px;
-                        overflow-y: auto;
-                        margin-bottom: 15px;
-                        border: 1px solid #ddd;
-                        border-radius: 6px;
-                        background: #fafafa;
-                      }
-                  
-                      .comments-list li {
-                        padding: 10px 15px;
-                        border-bottom: 1px solid #eee;
-                        font-size: 14px;
-                        color: #333;
-                      }
-                  
-                      .comments-list li:last-child {
-                        border-bottom: none;
-                      }
-                  
-                      .comment-input-area {
-                        display: flex;
-                        gap: 10px;
-                      }
-                  
-                      .comment-input-area textarea {
-                        flex-grow: 1;
-                        padding: 10px;
-                        font-size: 14px;
-                        border-radius: 6px;
-                        border: 1px solid #ccc;
-                        resize: vertical;
-                        min-height: 60px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comment-input-area button {
-                        background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                        border: none;
-                        color: white;
-                        font-weight: 600;
-                        padding: 0 20px;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                        font-size: 14px;
-                      }
-                  
-                      .comment-input-area button:hover {
-                        background-color: #0056b3;
-                      }
-                    </style>
-                  
-                    <div class="comment-section">
-                      <ul class="comments-list" id="comments-post5">
-                        <!-- Yorumlar buraya eklenecek -->
-                      </ul>
-                  
-                      <div class="comment-input-area">
-                        <textarea id="comment-input-post5" placeholder="Yorumunuzu yazınız..."></textarea>
-                        <button onclick="submitComment('post5')">Gönder</button>
-                      </div>
-                    </div>
-        
-                      
-                  </div>
-
-                
-
-          </article>
-
-
-        <article>
-
-            <h2> BIOINNOVATION 2023 </h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 5 Mayıs 2023</p>
-            <p>BİOİNNAVATİON 2023 yarışması kapsamında 4 aylık bir eğitim sürecinin ardından Ankara'da kamp için bir araya geldik. Yarışmaya BBAT topluluğu olarak katıldık ve 17 aktif katılımcı üniversite arasından takımımız 7. sırada yer aldı.
-            
-                52 saat, boyunca Ankarada minimum uyku maksimum çalışma ile alanda projelerimizi geliştirdik, koçlar ve başkanlarla tanıştık.
-            
-                17 üniversite takımı ve projeleri arasından bizde BBAT olarak üniversitemizi temsil ettik.
-                
-                Etkinlik kapsamında kamp öncesi ve sonrasında çok değerli bilgiler edindik. Bu projede yer alan Kader MORKOÇ, Rümeysa KUŞAKÇI, Suna DEĞİRMENCİ, Eda ALGAN, Sibel DEMİR ve Sümeyya YILMAZ arkadaşlarımıza, bu fırsatı bize sunan BIOINNOVATION ekibine ve bize destek çıkan öncekilikle ailemiz ardından hocalarımız ve bölüm arkadaşlarımıza teşekkür ederiz.</p>
-            
-            
-            
-            
-            
-                <div class="etkinlik-container">
-                    <div class="etkinlik-fotograflar">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(9).webp" alt="Etkinlik 9">
-            
-                        <!-- Görsellerin tekrar etmesi için ikinci set -->
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(1).webp" alt="Etkinlik 1">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(2).webp" alt="Etkinlik 2">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(3).webp" alt="Etkinlik 3">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(4).webp" alt="Etkinlik 4">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(5).webp" alt="Etkinlik 5">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(6).webp" alt="Etkinlik 6">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(7).webp" alt="Etkinlik 7">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(8).webp" alt="Etkinlik 8">
-                        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/bioinoeski%20(9).webp" alt="Etkinlik 9">
-                    </div>
-                </div>
-            
-                <div class="post" data-post-id="post6">
-
-                    <style>
-                      .comment-section {
-                        margin-top: 20px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comments-list {
-                        list-style: none;
-                        padding: 0;
-                        max-height: 250px;
-                        overflow-y: auto;
-                        margin-bottom: 15px;
-                        border: 1px solid #ddd;
-                        border-radius: 6px;
-                        background: #fafafa;
-                      }
-                  
-                      .comments-list li {
-                        padding: 10px 15px;
-                        border-bottom: 1px solid #eee;
-                        font-size: 14px;
-                        color: #333;
-                      }
-                  
-                      .comments-list li:last-child {
-                        border-bottom: none;
-                      }
-                  
-                      .comment-input-area {
-                        display: flex;
-                        gap: 10px;
-                      }
-                  
-                      .comment-input-area textarea {
-                        flex-grow: 1;
-                        padding: 10px;
-                        font-size: 14px;
-                        border-radius: 6px;
-                        border: 1px solid #ccc;
-                        resize: vertical;
-                        min-height: 60px;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                      }
-                  
-                      .comment-input-area button {
-                        background-color: #007bff; /* BBAT ana renklerine uyarlanabilir */
-                        border: none;
-                        color: white;
-                        font-weight: 600;
-                        padding: 0 20px;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                        font-size: 14px;
-                      }
-                  
-                      .comment-input-area button:hover {
-                        background-color: #0056b3;
-                      }
-                    </style>
-                  
-                    <div class="comment-section">
-                      <ul class="comments-list" id="comments-post6">
-                        <!-- Yorumlar buraya eklenecek -->
-                      </ul>
-                  
-                      <div class="comment-input-area">
-                        <textarea id="comment-input-post6" placeholder="Yorumunuzu yazınız..."></textarea>
-                        <button onclick="submitComment('post6')">Gönder</button>
-                      </div>
-                    </div>
-                      
-                  </div>
-                  
-            
-            </article>
-
-
-</main>
-
-<footer>
-    <p>&copy;  2025 BBAT, Kastamonu Üniversitesine Bağlı Bir Öğrenci Topluluğudur.</p>
-</footer>
-
-
-<!-- Lightbox yapısı -->
-<div class="lightbox-overlay" id="lightbox">
-    <div class="lightbox-controls">
-        <button id="prev-btn">&#10094;</button>
-        <button id="next-btn">&#10095;</button>
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-controls">
+            <button id="prev-btn">&#10094;</button>
+            <button id="next-btn">&#10095;</button>
+        </div>
+        <img id="lightbox-img" src="" alt="Görsel">
     </div>
-    <img id="lightbox-img" src="" alt="Büyütülmüş Görsel">
-</div>
 
-<!-- JavaScript -->
-<script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        if(menuToggle) menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
 
-    menuToggle.addEventListener('click', () => {
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    });
+        document.getElementById("signup-btn").addEventListener("click", () => window.location.href = "register.html");
+        document.getElementById("login-btn").addEventListener("click", () => window.location.href = "login.html");
 
-    document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
-            menu.style.display = 'none';
-        }
-    });
+        // --- GALERİ MANTIĞI ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentGalleryImages = [];
+        let currentIndex = 0;
 
-    const galleryImages = Array.from(document.querySelectorAll('.etkinlik-fotograflar img'));
-    let currentIndex = 0;
-
-    function showImage(index) {
-        if (index < 0) index = galleryImages.length - 1;
-        if (index >= galleryImages.length) index = 0;
-        currentIndex = index;
-        lightboxImg.src = galleryImages[currentIndex].src;
-        lightbox.style.display = 'flex';
-    }
-
-    galleryImages.forEach((img, index) => {
-        img.addEventListener('click', () => {
-            showImage(index);
+        // Statik resimler için
+        document.querySelectorAll('img.media-item').forEach(img => {
+            img.addEventListener('click', () => showImage(img));
         });
-    });
 
-    prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentIndex - 1);
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentIndex + 1);
-    });
-
-    lightbox.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-        lightboxImg.src = '';
-    });
-</script>
-
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  
-    const firebaseConfig = {
-      apiKey: "AIzaSyAdPt8XuUEzJugYI2R9NpUXUCUQXttHaXI",
-      authDomain: "bbat-295c4.firebaseapp.com",
-      projectId: "bbat-295c4",
-      storageBucket: "bbat-295c4.appspot.com",
-      messagingSenderId: "849546748999",
-      appId: "1:849546748999:web:476431352773d260fcfd62",
-      measurementId: "G-DMZCNMJ7E0"
-    };
-  
-    const app = initializeApp(firebaseConfig);
-  </script>
-  
-
-  <script type="module">
-    import {
-      getAuth,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      doc,
-      getDoc,
-      query,
-      orderBy,
-      onSnapshot
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  
-    const auth = getAuth();
-    const db = getFirestore();
-    let currentUser = null;
-  
-    // Giriş yapan kullanıcıyı takip et
-    onAuthStateChanged(auth, (user) => {
-      currentUser = user;
-    });
-  
-    // Yorum gönderme fonksiyonu
-    window.submitComment = async function(postId) {
-      const commentInput = document.getElementById(`comment-input-${postId}`);
-      const commentText = commentInput.value.trim();
-      if (!commentText) return;
-      if (!currentUser) {
-        alert("Giriş yapmadan yorum yapamazsınız.");
-        return;
-      }
-  
-      try {
-        // Firestore'dan kullanıcı adını çek
-        const userDocRef = doc(db, "users", currentUser.uid);
-        const userSnap = await getDoc(userDocRef);
-        const username = userSnap.exists() ? userSnap.data().username : "Anonim";
-  
-        // Yorumları veritabanına kaydet
-        await addDoc(collection(db, "comments"), {
-          postId: postId,
-          uid: currentUser.uid,
-          username: username,
-          text: commentText,
-          timestamp: new Date()
-        });
-  
-        commentInput.value = ""; // Yorum kutusunu temizle
-      } catch (error) {
-        console.error("Yorum gönderilirken hata:", error);
-      }
-    };
-  
-    // Yorumları dinle ve göster
-    function listenForComments(postId) {
-      const q = query(collection(db, "comments"), orderBy("timestamp"));
-      const commentList = document.getElementById(`comments-${postId}`);
-  
-      onSnapshot(q, (snapshot) => {
-        commentList.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const c = doc.data();
-          if (c.postId === postId) {
-            const li = document.createElement("li");
-            li.textContent = `${c.username}: ${c.text}`;
-            commentList.appendChild(li);
-          }
-        });
-      });
-    }
-  
-    // Sayfa yüklenince tüm post'lar için yorumları dinle
-    window.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".post").forEach((post) => {
-        const postId = post.getAttribute("data-post-id");
-        listenForComments(postId);
-      });
-  
-      // Enter tuşuyla gönderim (Shift+Enter alt satır)
-      document.querySelectorAll('textarea[id^="comment-input-post"]').forEach(textarea => {
-        textarea.addEventListener('keydown', function(event) {
-          if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            const postId = this.id.replace('comment-input-', '');
-            submitComment(postId);
-          }
-        });
-      });
-    });
-  </script>
-  
-  <!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<script>
-    // Firebase yapılandırma
-    const firebaseConfig = {
-        apiKey: "AIzaSyAdPt8XuUEzJugYI2R9NpUXUCUQXttHaXI",
-        authDomain: "bbat-295c4.firebaseapp.com",
-        projectId: "bbat-295c4",
-        appId: "1:849546748999:web:476431352773d260fcfd62"
-    };
-
-    // Firebase başlat
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Kullanıcı durumuna göre butonları göster/gizle ve kullanıcı adını getir
-    auth.onAuthStateChanged(async (user) => {
-        const authButtons = document.getElementById('auth-buttons');
-        const userInfo = document.getElementById('user-info');
-        const welcomeText = document.getElementById('welcome-text');
-
-        if (user) {
-            authButtons.style.display = 'none';
-            userInfo.style.display = 'block';
-
-            try {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                if (userDoc.exists) {
-                    const username = userDoc.data().username || user.email.split('@')[0];
-                    welcomeText.textContent = `Hoş geldiniz, ${username}`;
-                } else {
-                    welcomeText.textContent = `Hoş geldiniz, ${user.email.split('@')[0]}`;
-                }
-            } catch (error) {
-                console.error("Kullanıcı adı alınırken hata:", error);
-                welcomeText.textContent = `Hoş geldiniz, ${user.email.split('@')[0]}`;
+        // Dinamik resimler için (Admin panelinden gelenler)
+        window.showImage = function(imgElement) {
+            const group = imgElement.closest('.gallery-group');
+            if (!group) {
+                currentGalleryImages = [imgElement];
+            } else {
+                currentGalleryImages = Array.from(group.querySelectorAll('img.media-item'));
             }
-        } else {
-            authButtons.style.display = 'block';
-            userInfo.style.display = 'none';
-            welcomeText.textContent = '';
+
+            const index = currentGalleryImages.indexOf(imgElement);
+            if(index === -1) return;
+            
+            currentIndex = index;
+            updateLightboxImage();
+            
+            if (currentGalleryImages.length > 1) {
+                if(prevBtn) prevBtn.style.display = 'block';
+                if(nextBtn) nextBtn.style.display = 'block';
+            } else {
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
+            }
+
+            lightbox.style.display = 'flex';
         }
-    });
 
-    // Çıkış yap
-    function logout() {
-        auth.signOut().then(() => {
-            alert("Çıkış yapıldı.");
-            window.location.reload();
-        }).catch((error) => {
-            alert("Çıkış yapılamadı: " + error.message);
+        function updateLightboxImage() {
+            lightboxImg.src = currentGalleryImages[currentIndex].src;
+        }
+
+        function navigateLightbox(direction) {
+            if (currentGalleryImages.length <= 1) return;
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = currentGalleryImages.length - 1;
+            if (currentIndex >= currentGalleryImages.length) currentIndex = 0;
+            updateLightboxImage();
+        }
+
+        if(prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(-1); });
+        if(nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
+        if(lightbox) lightbox.addEventListener('click', () => { lightbox.style.display = 'none'; currentGalleryImages = []; });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAdPt8XuUEzJugYI2R9NpUXUCUQXttHaXI",
+            authDomain: "bbat-295c4.firebaseapp.com",
+            projectId: "bbat-295c4",
+            appId: "1:849546748999:web:476431352773d260fcfd62"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        let currentUser = null;
+
+        auth.onAuthStateChanged(async (user) => {
+            currentUser = user;
+            if (user) {
+                document.getElementById('auth-buttons').style.display = 'none';
+                document.getElementById('user-info').style.display = 'flex';
+                
+                const adminEmail = "alperymnay@gmail.com"; 
+                if(user.email === adminEmail && !document.getElementById('admin-link')) {
+                    const li = document.createElement('li');
+                    li.innerHTML = '<a href="admin.html" id="admin-link" style="color:red; font-weight:bold;">YÖNETİM</a>';
+                    document.querySelector('.nav-links ul').appendChild(li);
+                }
+
+                try {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    let username = user.email.split('@')[0];
+                    if (userDoc.exists && userDoc.data().username) username = userDoc.data().username;
+                    document.getElementById('welcome-text').textContent = `Merhaba, ${username}`;
+                } catch (e) {
+                    document.getElementById('welcome-text').textContent = `Merhaba, ${user.email.split('@')[0]}`;
+                }
+            } else {
+                document.getElementById('auth-buttons').style.display = 'flex';
+                document.getElementById('user-info').style.display = 'none';
+                if(document.getElementById('admin-link')) document.getElementById('admin-link').parentElement.remove();
+            }
         });
-    }
 
-    // Giriş ve kayıt yönlendirme
-    document.getElementById("signup-btn").addEventListener("click", function () {
-        window.location.href = "register.html";
-    });
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            auth.signOut().then(() => window.location.reload());
+        });
 
-    document.getElementById("login-btn").addEventListener("click", function () {
-        window.location.href = "login.html";
-    });
+        // --- YENİ: DİNAMİK ETKİNLİKLERİ ÇEKME ---
+        db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').onSnapshot(snapshot => {
+            const container = document.getElementById('dynamic-events-container');
+            container.innerHTML = ""; // Temizle
 
-    // Çıkış butonuna tıklama dinleyicisi
-    document.getElementById("logout-btn").addEventListener("click", logout);
-</script>
-  
-  
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const postId = doc.id; 
 
+                // HTML Oluştur
+                let resimHTML = '';
+                if(data.kapakResmi && data.kapakResmi.length > 5) {
+                    resimHTML = `
+                    <div class="media-scroller gallery-group">
+                        <img src="${data.kapakResmi}" class="media-item" onclick="showImage(this)"> 
+                    </div>`;
+                }
 
+                const eventHTML = `
+                    <article class="post" data-post-id="${postId}">
+                        <h2>${data.baslik}</h2>
+                        <span class="meta">Yazar: ${data.yazar} | Tarih: ${data.tarih}</span>
+                        <p style="white-space: pre-wrap;">${data.aciklama}</p>
+                        ${resimHTML}
+                        <div class="comment-section">
+                            <h4>Yorumlar</h4>
+                            <ul class="comments-list" id="comments-${postId}"></ul>
+                            <div class="comment-input-area">
+                                <textarea id="comment-input-${postId}" placeholder="Yorum yaz..."></textarea>
+                                <button class="comment-btn" onclick="submitComment('${postId}')">Gönder</button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                
+                container.innerHTML += eventHTML;
+                
+                // Yorumları dinle
+                listenForComments(postId);
+            });
+        });
+
+        // --- YORUM SİSTEMİ ---
+        window.submitComment = async function(postId) {
+            const val = document.getElementById(`comment-input-${postId}`).value.trim();
+            if (!val) return;
+            if (!currentUser) { alert("Lütfen giriş yapın."); return; }
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const username = userDoc.exists && userDoc.data().username ? userDoc.data().username : currentUser.email.split('@')[0];
+                await db.collection("comments").add({
+                    postId: postId, uid: currentUser.uid, username: username, text: val, timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                document.getElementById(`comment-input-${postId}`).value = "";
+            } catch (err) { alert("Yorum hatası: " + err.message); }
+        };
+
+        // Yorum sıralaması - JS ile (Index hatasını önlemek için)
+function listenForComments(postId) {
+    db.collection("comments").where("postId", "==", postId)
+      .onSnapshot((snap) => {
+          const list = document.getElementById(`comments-${postId}`);
+          if(list) {
+              list.innerHTML = "";
+              let comments = [];
+              snap.forEach(doc => comments.push(doc.data()));
+              
+              // Tarihe göre sıralama (Eskiden yeniye)
+              comments.sort((a, b) => {
+                  const t1 = a.timestamp ? a.timestamp.seconds : 0;
+                  const t2 = b.timestamp ? b.timestamp.seconds : 0;
+                  return t1 - t2;
+              });
+
+              comments.forEach(d => {
+                  const li = document.createElement("li");
+
+                  // --- GÜVENLİK GÜNCELLEMESİ BAŞLANGIÇ ---
+                  // 1. Kullanıcı adını oluştur (Kalın ve Kırmızı)
+                  const strong = document.createElement("strong");
+                  strong.textContent = d.username + ": ";
+                  strong.style.color = "#a90000"; 
+
+                  // 2. Yorum metnini oluştur (Düz Metin - Güvenli)
+                  const textSpan = document.createElement("span");
+                  textSpan.textContent = d.text; 
+                  // textContent kullanınca, içine kod yazsalar bile çalışmaz, yazı olarak görünür.
+
+                  // 3. Parçaları birleştir
+                  li.appendChild(strong);
+                  li.appendChild(textSpan);
+                  // --- GÜVENLİK GÜNCELLEMESİ BİTİŞ ---
+
+                  list.appendChild(li);
+              });
+          }
+      });
+}
+        // Statik postlar için dinleyici başlat
+        document.querySelectorAll(".post").forEach(post => listenForComments(post.getAttribute("data-post-id")));
+    </script>
 </body>
 </html>
