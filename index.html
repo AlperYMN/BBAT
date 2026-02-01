@@ -270,7 +270,7 @@
             }
         });
 
-        // --- DUYURULARI ÇEKME (VİDEO DESTEKLİ) ---
+        // --- DUYURULARI ÇEKME (VİDEO & YAN YANA TASARIM DESTEKLİ) ---
         db.collection("duyurular").onSnapshot(
             (snapshot) => {
                 const liste = document.getElementById("duyuru-listesi");
@@ -283,11 +283,8 @@
                     return; 
                 }
 
-                // Verileri diziye alıp sıralayalım
                 let duyurular = [];
-                snapshot.forEach(doc => {
-                    duyurular.push(doc.data());
-                });
+                snapshot.forEach(doc => { duyurular.push(doc.data()); });
 
                 // Yeniden eskiye sırala
                 duyurular.sort((a, b) => {
@@ -298,33 +295,49 @@
 
                 // Helper: Video mu?
                 function isVideo(url) {
-                    // Linkin içinde .mp4, .webm vs geçiyor mu diye bakar (raw=true olsa bile tanır)
                     return url.match(/\.(mp4|webm|ogg)/i);
                 }
 
                 duyurular.forEach(veri => {
                     let medyaHTML = '';
                     
+                    // Eğer medya varsa HTML'ini hazırla
                     if(veri.resim && veri.resim.length > 5) {
                         if (isVideo(veri.resim)) {
-                            // EĞER VİDEO İSE: Video oynatıcı koy
+                            // --- GIF GİBİ VİDEO AYARLARI ---
+                            // autoplay: Otomatik başla
+                            // muted: Sessiz ol (Tarayıcıların otomatik oynatması için şart)
+                            // loop: Sürekli başa sar
+                            // playsinline: Mobilde tam ekran olma, olduğu yerde oyna
                             medyaHTML = `
-                                <video controls style="width:100%; max-width:100%; border-radius:8px; margin-bottom:15px; background:black; display:block;">
+                            <div class="duyuru-media-container">
+                                <video autoplay muted loop playsinline class="duyuru-media">
                                     <source src="${veri.resim}" type="video/mp4">
-                                    Tarayıcınız bu videoyu desteklemiyor.
-                                </video>`;
+                                </video>
+                            </div>`;
                         } else {
-                            // EĞER RESİM İSE: Resim koy (Eski hali)
-                            medyaHTML = `<img src="${veri.resim}" class="duyuru-img" onclick="openDynamicLightbox(this.src)" style="cursor:pointer; margin-bottom:15px; display:block;">`;
+                            // RESİM İSE
+                            medyaHTML = `
+                            <div class="duyuru-media-container">
+                                <img src="${veri.resim}" class="duyuru-media" onclick="openDynamicLightbox(this.src)" style="cursor:pointer;">
+                            </div>`;
                         }
+                    } else {
+                        // Medya yoksa boş bir container koy ki hizalama bozulmasın (İsteğe bağlı kaldırılabilir)
+                        medyaHTML = `<div class="duyuru-media-container" style="display:none;"></div>`;
                     }
 
+                    // YENİ HTML YAPISI (Yan Yana Düzen)
                     const duyuruHTML = `
                         <div class="duyuru-item">
                             <span class="meta" style="color:#a90000; font-weight:bold; display:block; margin-bottom:10px;">📅 ${veri.tarih}</span>
-                            ${medyaHTML}
-                            <div class="duyuru-text">
-                                <p style="white-space: pre-wrap;">${veri.icerik}</p>
+                            
+                            <div class="duyuru-content-wrapper">
+                                ${medyaHTML}
+                                
+                                <div class="duyuru-text">
+                                    <p style="white-space: pre-wrap;">${veri.icerik}</p>
+                                </div>
                             </div>
                         </div>`;
                     liste.innerHTML += duyuruHTML;
