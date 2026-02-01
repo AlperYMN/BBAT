@@ -289,15 +289,17 @@
                     duyurular.push(doc.data());
                 });
 
+                // Yeniden eskiye sırala
                 duyurular.sort((a, b) => {
                     let dateA = a.olusturulmaTarihi ? a.olusturulmaTarihi.seconds : 0;
                     let dateB = b.olusturulmaTarihi ? b.olusturulmaTarihi.seconds : 0;
                     return dateB - dateA;
                 });
 
-                // Video kontrol fonksiyonu
+                // Helper: Video mu?
                 function isVideo(url) {
-                    return url.match(/\.(mp4|webm|ogg)(\?.*)?$/i);
+                    // Linkin içinde .mp4, .webm vs geçiyor mu diye bakar (raw=true olsa bile tanır)
+                    return url.match(/\.(mp4|webm|ogg)/i);
                 }
 
                 duyurular.forEach(veri => {
@@ -305,14 +307,14 @@
                     
                     if(veri.resim && veri.resim.length > 5) {
                         if (isVideo(veri.resim)) {
-                            // Video ise
+                            // EĞER VİDEO İSE: Video oynatıcı koy
                             medyaHTML = `
-                                <video controls class="duyuru-img" style="width:100%; max-width:300px; border-radius:8px; margin-bottom:15px; display:block;">
+                                <video controls style="width:100%; max-width:100%; border-radius:8px; margin-bottom:15px; background:black; display:block;">
                                     <source src="${veri.resim}" type="video/mp4">
-                                    Tarayıcınız videoyu desteklemiyor.
+                                    Tarayıcınız bu videoyu desteklemiyor.
                                 </video>`;
                         } else {
-                            // Resim ise
+                            // EĞER RESİM İSE: Resim koy (Eski hali)
                             medyaHTML = `<img src="${veri.resim}" class="duyuru-img" onclick="openDynamicLightbox(this.src)" style="cursor:pointer; margin-bottom:15px; display:block;">`;
                         }
                     }
