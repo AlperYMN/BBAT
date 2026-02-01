@@ -438,3 +438,53 @@ footer {
         box-sizing: border-box;
     }
 }
+/* --- YENİ DUYURU TASARIMI (YAN YANA TARZ) --- */
+.duyuru-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+/* Medya ve Metni kapsayan yeni taşıyıcı */
+.duyuru-content-wrapper {
+    display: flex;
+    gap: 20px; /* Medya ile metin arası boşluk */
+    align-items: flex-start; /* Üstten hizala */
+}
+
+/* Medya (Resim veya Video) Alanı */
+.duyuru-media-container {
+    flex: 0 0 280px; /* Genişliği 280px'e sabitle */
+    max-width: 40%; /* Ama ekranın %40'ını da geçmesin */
+}
+
+/* Medyanın kendisi */
+.duyuru-media {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: block;
+    object-fit: cover;
+    /* Videoların GIF gibi görünmesi için arka plan siyah */
+    background: #000; 
+}
+
+/* Metin Alanı */
+.duyuru-text {
+    flex: 1; /* Kalan tüm alanı kapla */
+}
+
+/* --- MOBİL UYUMLULUK --- */
+/* Ekran küçülünce (telefonlarda) tekrar alt alta geçsinler */
+@media (max-width: 768px) {
+    .duyuru-content-wrapper {
+        flex-direction: column;
+    }
+    .duyuru-media-container {
+        flex: 1;
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
