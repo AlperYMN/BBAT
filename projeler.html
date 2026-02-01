@@ -48,6 +48,9 @@
         .comment-input-area { display: flex; gap: 10px; margin-top: 10px; }
         .comment-input-area textarea { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
         .comment-btn { background: #a90000; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; }
+        
+        /* Dinamik Yüklenen Etkinlikler İçin (Yeşil Çizgi Yok) */
+        #dynamic-events-container article { border-left: none; }
     </style>
 </head>
 
@@ -245,7 +248,7 @@
             img.addEventListener('click', () => showImage(img));
         });
 
-        // Dinamik resimler için (Admin panelinden gelenler)
+        // Dinamik resimler için
         window.showImage = function(imgElement) {
             const group = imgElement.closest('.gallery-group');
             if (!group) {
@@ -337,7 +340,7 @@
             auth.signOut().then(() => window.location.reload());
         });
 
-        // --- YENİ: DİNAMİK ETKİNLİKLERİ ÇEKME ---
+        // --- YENİ: ÇOKLU FOTOĞRAF DESTEĞİ İLE VERİ ÇEKME ---
         db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').onSnapshot(snapshot => {
             const container = document.getElementById('dynamic-events-container');
             container.innerHTML = ""; // Temizle
@@ -346,10 +349,20 @@
                 const data = doc.data();
                 const postId = doc.id; 
 
-                // HTML Oluştur
-                let resimHTML = '';
-                if(data.kapakResmi && data.kapakResmi.length > 5) {
-                    resimHTML = `
+                // Resimleri Döngüyle Ekle
+                let imagesHTML = '';
+                
+                // Eğer "galeri" dizisi varsa ve doluysa onu kullan
+                if (data.galeri && Array.isArray(data.galeri) && data.galeri.length > 0) {
+                    imagesHTML = `<div class="media-scroller gallery-group">`;
+                    data.galeri.forEach(imgSrc => {
+                        imagesHTML += `<img src="${imgSrc}" class="media-item" onclick="showImage(this)">`;
+                    });
+                    imagesHTML += `</div>`;
+                } 
+                // Eski usul sadece "kapakResmi" varsa onu kullan
+                else if (data.kapakResmi && data.kapakResmi.length > 5) {
+                    imagesHTML = `
                     <div class="media-scroller gallery-group">
                         <img src="${data.kapakResmi}" class="media-item" onclick="showImage(this)"> 
                     </div>`;
@@ -360,7 +373,7 @@
                         <h2>${data.baslik}</h2>
                         <span class="meta">Yazar: ${data.yazar} | Tarih: ${data.tarih}</span>
                         <p style="white-space: pre-wrap;">${data.aciklama}</p>
-                        ${resimHTML}
+                        ${imagesHTML}
                         <div class="comment-section">
                             <h4>Yorumlar</h4>
                             <ul class="comments-list" id="comments-${postId}"></ul>
@@ -395,47 +408,37 @@
             } catch (err) { alert("Yorum hatası: " + err.message); }
         };
 
-        // Yorum sıralaması - JS ile (Index hatasını önlemek için)
-function listenForComments(postId) {
-    db.collection("comments").where("postId", "==", postId)
-      .onSnapshot((snap) => {
-          const list = document.getElementById(`comments-${postId}`);
-          if(list) {
-              list.innerHTML = "";
-              let comments = [];
-              snap.forEach(doc => comments.push(doc.data()));
-              
-              // Tarihe göre sıralama (Eskiden yeniye)
-              comments.sort((a, b) => {
-                  const t1 = a.timestamp ? a.timestamp.seconds : 0;
-                  const t2 = b.timestamp ? b.timestamp.seconds : 0;
-                  return t1 - t2;
+        // GÜVENLİ YORUM LİSTELEME
+        function listenForComments(postId) {
+            db.collection("comments").where("postId", "==", postId)
+              .onSnapshot((snap) => {
+                  const list = document.getElementById(`comments-${postId}`);
+                  if(list) {
+                      list.innerHTML = "";
+                      let comments = [];
+                      snap.forEach(doc => comments.push(doc.data()));
+                      
+                      comments.sort((a, b) => {
+                          const t1 = a.timestamp ? a.timestamp.seconds : 0;
+                          const t2 = b.timestamp ? b.timestamp.seconds : 0;
+                          return t1 - t2;
+                      });
+
+                      comments.forEach(d => {
+                          const li = document.createElement("li");
+                          const strong = document.createElement("strong");
+                          strong.textContent = d.username + ": ";
+                          strong.style.color = "#a90000"; 
+                          const textSpan = document.createElement("span");
+                          textSpan.textContent = d.text; 
+                          li.appendChild(strong);
+                          li.appendChild(textSpan);
+                          list.appendChild(li);
+                      });
+                  }
               });
+        }
 
-              comments.forEach(d => {
-                  const li = document.createElement("li");
-
-                  // --- GÜVENLİK GÜNCELLEMESİ BAŞLANGIÇ ---
-                  // 1. Kullanıcı adını oluştur (Kalın ve Kırmızı)
-                  const strong = document.createElement("strong");
-                  strong.textContent = d.username + ": ";
-                  strong.style.color = "#a90000"; 
-
-                  // 2. Yorum metnini oluştur (Düz Metin - Güvenli)
-                  const textSpan = document.createElement("span");
-                  textSpan.textContent = d.text; 
-                  // textContent kullanınca, içine kod yazsalar bile çalışmaz, yazı olarak görünür.
-
-                  // 3. Parçaları birleştir
-                  li.appendChild(strong);
-                  li.appendChild(textSpan);
-                  // --- GÜVENLİK GÜNCELLEMESİ BİTİŞ ---
-
-                  list.appendChild(li);
-              });
-          }
-      });
-}
         // Statik postlar için dinleyici başlat
         document.querySelectorAll(".post").forEach(post => listenForComments(post.getAttribute("data-post-id")));
     </script>
