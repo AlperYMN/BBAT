@@ -3,305 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BBAT</title>
+    <title>BBAT - Anasayfa</title>
     <link rel="icon" href="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Quicksand:wght@400&display=swap" rel="stylesheet">
     
-    <!-- Lightbox Stil -->
     <style>
+        /* Lightbox & Galeri Stilleri */
         .lightbox-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); display: none;
+            justify-content: center; align-items: center; z-index: 9999;
         }
         .lightbox-overlay img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 5px solid white;
-            border-radius: 10px;
+            max-width: 90%; max-height: 90%; border: 5px solid white; border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
         .lightbox-controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            pointer-events: none;
+            position: absolute; top: 50%; width: 100%; display: flex;
+            justify-content: space-between; transform: translateY(-50%); pointer-events: none;
         }
         .lightbox-controls button {
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
-            font-size: 2rem;
-            padding: 10px;
-            margin: 0 20px;
-            border-radius: 50%;
-            cursor: pointer;
-            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.1); color: white; border: none;
+            font-size: 3rem; padding: 20px; cursor: pointer; pointer-events: auto;
+            transition: background 0.3s;
         }
+        .lightbox-controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Yatay Kaydırma Şeridi */
+        .media-scroller {
+            display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; margin: 20px 0;
+            scrollbar-width: thin; scrollbar-color: #a90000 #eee;
+        }
+        .media-scroller::-webkit-scrollbar { height: 8px; }
+        .media-scroller::-webkit-scrollbar-thumb { background-color: #a90000; border-radius: 4px; }
+        
+        .media-item {
+            height: 180px; width: auto; border-radius: 8px; flex-shrink: 0; cursor: pointer;
+            transition: transform 0.2s; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .media-item:hover { transform: scale(1.02); }
     </style>
 </head>
 
+<body>
+
     <header>
-        <div class="unilogo">
-            <img src="https://github.com/Riwelda/BBAT/blob/main/unilogo.jpg?raw=true" alt="unilogo">
-        </div>
-        <h1>BİYOLOJİK BİLİMLER ARAŞTIRMA TOPLULUĞU</h1>
-        <div class="toplogo">
-            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" alt="Üst Logo">
+        <div class="brand-container">
+            <img src="https://github.com/Riwelda/BBAT/blob/main/unilogo.jpg?raw=true" alt="Kastamonu Üni Logo">
+            <div class="site-title" style="margin: 0 15px; text-align:center;">
+                <h1>BİYOLOJİK BİLİMLER<br>ARAŞTIRMA TOPLULUĞU</h1>
+            </div>
+            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" alt="BBAT Logo">
         </div>
         <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-        <nav class="menu" id="menu">
+        <nav class="nav-links" id="nav-links">
             <ul>
+                <li><a href="index.html">Anasayfa</a></li>
                 <li><a href="hakkimizda.html">Hakkımızda</a></li>
-                <li><a href="projeler.html">Etkinliklerimiz</a></li>
+                <li><a href="projeler.html">Etkinlikler</a></li>
                 <li><a href="iletisim.html">İletişim</a></li>
             </ul>
-        </nav>
-
-        <div id="auth-buttons" class="auth-buttons">
-            <button id="signup-btn">Kayıt Ol</button>
-            <button id="login-btn">Giriş Yap</button>
-        </div>
-
-        <div id="user-info" class="auth-buttons" style="display: none;">
-            <span id="welcome-text"></span>
-            <button id="logout-btn">Çıkış Yap</button>
-        </div>
-    
-    </header>
-
-<main>
-    <div class="photo-strip">
-        <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/fenfak.jpeg" alt="Etkinlik Fotoğrafı">
-    </div>
-    
-    <div class="duyurular-container">
-        <article class="duyurular">
-            <h2>GÜNCEL DUYURULAR!</h2>
-            
-            <p class="meta"><u>06 Ağustos 2025</u></p>
-            <p>
-                BBAT WHATSAPP KANALIMIZ AÇILDI!! HERKESE AÇIK ANKETLER, SORU-CEVAPLAR VE DAHASI SİZLERİ BEKLİYOR! 
-                <a href="https://whatsapp.com/channel/0029VbAhiY9AInPi7ie7e02H">BURAYA TIKLAYARAK KANALA ULAŞABİLRSİNİZ.</a>
-            </p>
-            
-            <p class="meta"><u>16 Eylül 2025</u></p>
-    
-            <!-- Flex container ile görsel ve metin yan yana -->
-            <div class="duyuru-flex">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/yemicalistay.jpg" 
-     alt="yemicalistay" 
-     class="duyuru-img lightbox-trigger gallery-img">
-                <div class="duyuru-text">
-                    <p>
-                        25 Eylül 09.30-17.00 saatleri arasında yapılacak olan çalıştayımıza tüm bilimseverler davetlidir.
-                    </p>
+            <div class="auth-buttons-container">
+                <div id="auth-buttons" style="display: flex; gap: 10px;">
+                    <button id="login-btn" class="btn btn-outline">Giriş Yap</button>
+                    <button id="signup-btn" class="btn btn-primary">Kayıt Ol</button>
+                </div>
+                <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+                    <span id="welcome-text" style="font-weight: bold; color: #a90000; font-size: 0.9rem;"></span>
+                    <button id="logout-btn" class="btn btn-primary" style="background-color: #333;">Çıkış</button>
                 </div>
             </div>
-        </article>
-    </div>
-    
-    
+        </nav>
+    </header>
 
-   
-        
-     
-    
-
-
-
-
-
-
-    <div class="mission-vision-container">
-        <article class="mission">
-            <h2>MİSYONUMUZ</h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 23 Şubat 2025</p>
-            <p>BBAT olarak amacımız, Kastamonu Üniversitesi öğrencilerine doğa bilimleri alanında kapsamlı bir eğitim sunarak bilimsel farkındalık kazandırmak, araştırma becerilerini geliştirmek ve doğaya yönelik bilinçli bir bakış açısı oluşturmaktır. Akademik ve saha çalışmalarıyla öğrencileri destekleyerek bilimsel keşiflere katkıda bulunmalarını sağlamak öncelikli hedefimizdir.</p>
-        </article>
-
-        <article class="vision">
-            <h2>VİZYONUMUZ</h2>
-            <p class="meta">Yazar: Alper YAMAN | Tarih: 19 Şubat 2025</p>
-            <p>BBAT olarak, doğa bilimleri alanında yetkin, araştırmacı ruhlu ve çevreye duyarlı bireyler yetiştirerek Kastamonu Üniversitesi’nde bilimsel bilginin yaygınlaştırılmasına öncülük etmek istiyoruz. Doğa ve biyolojik bilimler alanında farkındalık oluşturarak, toplumsal ve çevresel sorunlara bilimsel çözümler üreten bir öğrenci topluluğu olmayı hedefliyoruz.</p>
-        </article>
-    </div>
-
-    <article>
-        <h2>Etkinliklerimizin Birkaçı...</h2>
-        <p class="meta">Yazar: Alper YAMAN | Tarih: 17 Şubat 2025</p>
-        <p>Ilgaz Dağı Milli Parkında mantar yürüyüşü etkinliği, "Sözde Bilim" Konferansı, "Omik Çağında Biyoinformatik" Konulu Sunum, Tanışma kahvaltımız, Çanakkale'deki Biyogaz Tesisi, Bioinnovation 2024 yarışması, "Buzulların Erimesi" Konulu Panel ve daha fazlası "Etkinliklerimiz" sekmesinde sizi bekliyor!</p>
-
-        <div class="etkinlik-container">
-            <div class="etkinlik-fotograflar">
-                <!-- Galeri görselleri -->
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk1.jpg" alt="Etkinlik 1">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk2.jpg" alt="Etkinlik 2">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk3.jpg" alt="Etkinlik 3">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk4.jpg" alt="Etkinlik 4">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk5.jpg" alt="Etkinlik 5">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/afis26mart2.jpg" alt="Etkinlik 6">
+    <main>
+        <div class="hero-wrapper">
+            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/fenfak.jpeg" alt="Kastamonu Üniversitesi" class="hero-img">
+            <div class="hero-content">
+                <h1>Doğayı Keşfet, Bilimle Koru.</h1>
+                <p>Kastamonu Üniversitesi Biyolojik Bilimler Araştırma Topluluğu</p>
             </div>
         </div>
-    </article>
-</main>
+        
+        <div class="duyurular-container">
+            <div class="whatsapp-card">
+                <div class="wa-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                </div>
+                <div class="wa-content">
+                    <h3>BBAT WhatsApp Kanalı Açıldı!</h3>
+                    <p>Duyurular, anketler ve etkinliklerden anında haberdar olmak için kanalımıza katılın.</p>
+                </div>
+                <div class="wa-action">
+                    <a href="https://whatsapp.com/channel/0029VbAhiY9AInPi7ie7e02H" target="_blank" class="btn-whatsapp">
+                        Kanalı Görüntüle
+                    </a>
+                </div>
+            </div>
 
-<footer>
-    <p>&copy;  2025 BBAT, Kastamonu Üniversitesine Bağlı Bir Öğrenci Topluluğudur.</p>
-</footer>
+            <article class="duyurular">
+                <h2>GÜNCEL DUYURULAR!</h2>
+                
+                <div id="duyuru-listesi">
+                    <p style="text-align: center; color: gray; padding: 20px;">Duyurular yükleniyor...</p>
+                </div>
+            </article>
+        </div>
+        
+        <article class="etkinlik-onizleme">
+            <h2>Etkinliklerimizin Birkaçı...</h2>
+            <p class="meta">Yazar: Alper YAMAN | Tarih: 17 Şubat 2025</p>
+            <p>Ilgaz Dağı Milli Parkında mantar yürüyüşü etkinliği, "Sözde Bilim" Konferansı, "Omik Çağında Biyoinformatik" Konulu Sunum, Tanışma kahvaltımız, Çanakkale'deki Biyogaz Tesisi, Bioinnovation 2024 yarışması, "Buzulların Erimesi" Konulu Panel ve daha fazlası "Etkinliklerimiz" sekmesinde sizi bekliyor!</p>
 
-<!-- Lightbox Yapısı -->
-<div class="lightbox-overlay" id="lightbox">
-    <div class="lightbox-controls">
-        <button id="prev-btn">&#10094;</button>
-        <button id="next-btn">&#10095;</button>
+            <div class="media-scroller gallery-group">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk1.jpg" alt="Etkinlik 1" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk2.jpg" alt="Etkinlik 2" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk3.jpg" alt="Etkinlik 3" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk4.jpg" alt="Etkinlik 4" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk5.jpg" alt="Etkinlik 5" class="media-item">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/afis26mart2.jpg" alt="Etkinlik 6" class="media-item">
+            </div>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 BBAT, Kastamonu Üniversitesine Bağlı Bir Öğrenci Topluluğudur.</p>
+    </footer>
+
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-controls">
+            <button id="prev-btn">&#10094;</button>
+            <button id="next-btn">&#10095;</button>
+        </div>
+        <img id="lightbox-img" src="" alt="Büyütülmüş Görsel">
     </div>
-    <img id="lightbox-img" src="" alt="Büyütülmüş Görsel">
-</div>
 
-<!-- Menü ve Galeri Script -->
-<script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-
-    // Menü toggle
-    menuToggle.addEventListener('click', () => {
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
-            menu.style.display = 'none';
+    <script>
+        // Menü
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
         }
-    });
 
-    // ------------------------
-    // Tüm galeriler için dinamik yapı
-    const galleries = document.querySelectorAll('.etkinlik-fotograflar, .gallery-row'); // .gallery-row projeler.html satırları olabilir
-    galleries.forEach(gallery => {
-        const images = Array.from(gallery.querySelectorAll('img'));
+        // Yönlendirmeler
+        document.getElementById("signup-btn").addEventListener("click", () => window.location.href = "register.html");
+        document.getElementById("login-btn").addEventListener("click", () => window.location.href = "login.html");
+
+        // --- GALERİ MANTIĞI ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentGalleryImages = [];
         let currentIndex = 0;
 
-        function showImage(index) {
-            if(index < 0) index = images.length - 1;
-            if(index >= images.length) index = 0;
-            currentIndex = index;
-            lightboxImg.src = images[currentIndex].src;
-            lightbox.style.display = 'flex';
-            prevBtn.style.display = 'inline-block';
-            nextBtn.style.display = 'inline-block';
-        }
-
-        images.forEach((img, index) => {
-            img.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showImage(index);
-            });
+        // Statik resimler için (Page Load)
+        document.querySelectorAll('img.media-item').forEach(img => {
+            img.addEventListener('click', () => showImage(img));
         });
 
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            showImage(currentIndex - 1);
-        });
-
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            showImage(currentIndex + 1);
-        });
-    });
-
-    // Tekli galeriler (duyurular vb.)
-    const singleImages = document.querySelectorAll('.gallery-img');
-    singleImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-            e.stopPropagation();
-            lightboxImg.src = img.src;
-            lightbox.style.display = 'flex';
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
-        });
-    });
-
-    // Overlay tıklama ile kapatma
-    lightbox.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-        lightboxImg.src = '';
-    });
-</script>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyAdPt8XuUEzJugYI2R9NpUXUCUQXttHaXI",
-        authDomain: "bbat-295c4.firebaseapp.com",
-        projectId: "bbat-295c4",
-        appId: "1:849546748999:web:476431352773d260fcfd62"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    const authButtons = document.getElementById('auth-buttons');
-    const userInfo = document.getElementById('user-info');
-    const welcomeText = document.getElementById('welcome-text');
-
-    auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            authButtons.style.display = 'none';
-            userInfo.style.display = 'block';
-
-            try {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                const username = userDoc.exists ? (userDoc.data().username || user.email.split('@')[0]) : user.email.split('@')[0];
-                welcomeText.textContent = `Hoş geldiniz, ${username}`;
-            } catch (error) {
-                console.error("Kullanıcı adı alınırken hata:", error);
-                welcomeText.textContent = `Hoş geldiniz, ${user.email.split('@')[0]}`;
+        // Dinamik resimler için (Function)
+        window.openDynamicLightbox = function(src) {
+            if(lightbox && lightboxImg) {
+                lightboxImg.src = src;
+                lightbox.style.display = 'flex';
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
             }
-        } else {
-            authButtons.style.display = 'block';
-            userInfo.style.display = 'none';
-            welcomeText.textContent = '';
         }
-    });
 
-    // Çıkış yap
-    function logout() {
-        auth.signOut().then(() => {
-            window.location.reload();
-        }).catch((error) => {
-            alert("Çıkış yapılamadı: " + error.message);
+        function showImage(imgElement) {
+            const group = imgElement.closest('.gallery-group');
+            if (!group) return;
+            currentGalleryImages = Array.from(group.querySelectorAll('img.media-item'));
+            const index = currentGalleryImages.indexOf(imgElement);
+            if(index === -1) return;
+            currentIndex = index;
+            
+            if(prevBtn) prevBtn.style.display = 'block';
+            if(nextBtn) nextBtn.style.display = 'block';
+            
+            updateLightboxImage();
+            lightbox.style.display = 'flex';
+        }
+
+        function updateLightboxImage() {
+            lightboxImg.src = currentGalleryImages[currentIndex].src;
+        }
+
+        function navigateLightbox(direction) {
+            if (currentGalleryImages.length === 0) return;
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = currentGalleryImages.length - 1;
+            if (currentIndex >= currentGalleryImages.length) currentIndex = 0;
+            updateLightboxImage();
+        }
+
+        if(prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(-1); });
+        if(nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
+        if(lightbox) lightbox.addEventListener('click', () => { lightbox.style.display = 'none'; currentGalleryImages = []; });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAdPt8XuUEzJugYI2R9NpUXUCUQXttHaXI",
+            authDomain: "bbat-295c4.firebaseapp.com",
+            projectId: "bbat-295c4",
+            appId: "1:849546748999:web:476431352773d260fcfd62"
+        };
+
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const welcomeText = document.getElementById('welcome-text');
+        const navUl = document.querySelector('.nav-links ul');
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                authButtons.style.display = 'none';
+                userInfo.style.display = 'flex';
+
+                const adminEmail = "alperymnay@gmail.com"; 
+                if(user.email === adminEmail) {
+                    if(!document.getElementById('admin-link')) {
+                        const li = document.createElement('li');
+                        li.innerHTML = '<a href="admin.html" id="admin-link" style="color:red; font-weight:bold;">YÖNETİM</a>';
+                        navUl.appendChild(li);
+                    }
+                }
+
+                try {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    let username = user.email.split('@')[0];
+                    if (userDoc.exists && userDoc.data().username) username = userDoc.data().username;
+                    welcomeText.textContent = `Merhaba, ${username}`;
+                } catch (error) {
+                    welcomeText.textContent = `Merhaba, ${user.email.split('@')[0]}`;
+                }
+            } else {
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+                if(document.getElementById('admin-link')) document.getElementById('admin-link').parentElement.remove();
+            }
         });
-    }
 
-    document.getElementById("signup-btn").addEventListener("click", () => {
-        window.location.href = "register.html";
-    });
+        // --- DUYURULARI ÇEKME (SAFE MODE) ---
+        // orderBy metodunu kaldırıp sıralamayı JavaScript içinde yapıyoruz.
+        // Bu sayede Index hatası almayız.
+        db.collection("duyurular").onSnapshot(
+            (snapshot) => {
+                const liste = document.getElementById("duyuru-listesi");
+                liste.innerHTML = ""; 
 
-    document.getElementById("login-btn").addEventListener("click", () => {
-        window.location.href = "login.html";
-    });
+                if(snapshot.empty) { 
+                    liste.innerHTML = "<p style='text-align:center; padding:20px; color:#666;'>Henüz güncel bir duyuru yok.</p>"; 
+                    return; 
+                }
 
-    document.getElementById("logout-btn").addEventListener("click", logout);
-</script>
+                // Verileri önce bir diziye alalım
+                let duyurular = [];
+                snapshot.forEach(doc => {
+                    duyurular.push(doc.data());
+                });
 
+                // JavaScript ile Tarihe Göre Sırala (Yeniden Eskiye)
+                duyurular.sort((a, b) => {
+                    // Eğer timestamp varsa onu kullan, yoksa 0 kabul et
+                    let dateA = a.olusturulmaTarihi ? a.olusturulmaTarihi.seconds : 0;
+                    let dateB = b.olusturulmaTarihi ? b.olusturulmaTarihi.seconds : 0;
+                    return dateB - dateA;
+                });
 
-    
+                // Sıralanmış veriyi ekrana bas
+                duyurular.forEach(veri => {
+                    let resimHTML = '';
+                    if(veri.resim && veri.resim.length > 5) {
+                        resimHTML = `<img src="${veri.resim}" class="duyuru-img" onclick="openDynamicLightbox(this.src)" style="cursor:pointer; margin-bottom:15px; display:block;">`;
+                    }
+                    const duyuruHTML = `
+                        <div class="duyuru-item">
+                            <span class="meta" style="color:#a90000; font-weight:bold; display:block; margin-bottom:10px;">📅 ${veri.tarih}</span>
+                            ${resimHTML}
+                            <div class="duyuru-text">
+                                <p style="white-space: pre-wrap;">${veri.icerik}</p>
+                            </div>
+                        </div>`;
+                    liste.innerHTML += duyuruHTML;
+                });
+            },
+            (error) => {
+                // SADECE GERÇEK HATALARDA BURASI ÇALIŞIR
+                console.error("Duyuru çekme hatası:", error);
+                
+                // İzin hatası mı kontrol et
+                if (error.code === 'permission-denied') {
+                    // İzin yoksa veya giriş yapılmadıysa, ama public olması gerekiyorsa
+                    // Kullanıcıya yine de boş mesaj gösterelim ki hata sanmasın
+                    const liste = document.getElementById("duyuru-listesi");
+                    liste.innerHTML = "<p style='text-align:center; padding:20px; color:#666;'>Duyurular yüklenemedi. (İzin Hatası)</p>";
+                } else {
+                    const liste = document.getElementById("duyuru-listesi");
+                    liste.innerHTML = "<p style='text-align:center; color:red; padding:20px;'>Bağlantı hatası.</p>";
+                }
+            }
+        );
+
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            auth.signOut().then(() => window.location.reload());
+        });
+    </script>
 </body>
 </html>
