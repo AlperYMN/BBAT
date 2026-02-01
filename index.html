@@ -270,10 +270,12 @@
             }
         });
 
-        // --- DUYURULARI ÇEKME (SAFE MODE) ---
+        // --- DUYURULARI ÇEKME (VİDEO DESTEKLİ) ---
         db.collection("duyurular").onSnapshot(
             (snapshot) => {
                 const liste = document.getElementById("duyuru-listesi");
+                if(!liste) return;
+                
                 liste.innerHTML = ""; 
 
                 if(snapshot.empty) { 
@@ -281,6 +283,7 @@
                     return; 
                 }
 
+                // Verileri diziye alıp sıralayalım
                 let duyurular = [];
                 snapshot.forEach(doc => {
                     duyurular.push(doc.data());
@@ -292,15 +295,32 @@
                     return dateB - dateA;
                 });
 
+                // Video kontrol fonksiyonu
+                function isVideo(url) {
+                    return url.match(/\.(mp4|webm|ogg)(\?.*)?$/i);
+                }
+
                 duyurular.forEach(veri => {
-                    let resimHTML = '';
+                    let medyaHTML = '';
+                    
                     if(veri.resim && veri.resim.length > 5) {
-                        resimHTML = `<img src="${veri.resim}" class="duyuru-img" onclick="openDynamicLightbox(this.src)" style="cursor:pointer; margin-bottom:15px; display:block;">`;
+                        if (isVideo(veri.resim)) {
+                            // Video ise
+                            medyaHTML = `
+                                <video controls class="duyuru-img" style="width:100%; max-width:300px; border-radius:8px; margin-bottom:15px; display:block;">
+                                    <source src="${veri.resim}" type="video/mp4">
+                                    Tarayıcınız videoyu desteklemiyor.
+                                </video>`;
+                        } else {
+                            // Resim ise
+                            medyaHTML = `<img src="${veri.resim}" class="duyuru-img" onclick="openDynamicLightbox(this.src)" style="cursor:pointer; margin-bottom:15px; display:block;">`;
+                        }
                     }
+
                     const duyuruHTML = `
                         <div class="duyuru-item">
                             <span class="meta" style="color:#a90000; font-weight:bold; display:block; margin-bottom:10px;">📅 ${veri.tarih}</span>
-                            ${resimHTML}
+                            ${medyaHTML}
                             <div class="duyuru-text">
                                 <p style="white-space: pre-wrap;">${veri.icerik}</p>
                             </div>
@@ -314,7 +334,6 @@
                 if(liste) liste.innerHTML = "<p style='text-align:center; color:red; padding:20px;'>Duyurular yüklenirken bir hata oluştu.</p>";
             }
         );
-
         // --- SON ETKİNLİKLERİ ANASAYFA GALERİSİNE EKLEME (VİDEO DESTEKLİ) ---
         db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').limit(5).onSnapshot(snapshot => {
             const galeri = document.getElementById('anasayfa-galeri');
