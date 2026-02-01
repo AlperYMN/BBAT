@@ -43,6 +43,7 @@
         .media-item {
             height: 180px; width: auto; border-radius: 8px; flex-shrink: 0; cursor: pointer;
             transition: transform 0.2s; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #000;
         }
         .media-item:hover { transform: scale(1.02); }
     </style>
@@ -106,9 +107,8 @@
 
             <article class="duyurular">
                 <h2>GÜNCEL DUYURULAR!</h2>
-                
                 <div id="duyuru-listesi">
-                    <p style="text-align: center; color: gray; padding: 20px;">Duyurular kontrol ediliyor...</p>
+                    <p style="text-align: center; color: gray; padding: 20px;">Duyurular yükleniyor...</p>
                 </div>
             </article>
         </div>
@@ -163,7 +163,7 @@
         let currentGalleryImages = [];
         let currentIndex = 0;
 
-        // Statik resimler için (Page Load)
+        // Statik resimler için
         document.querySelectorAll('img.media-item').forEach(img => {
             img.addEventListener('click', () => showImage(img));
         });
@@ -315,26 +315,33 @@
             }
         );
 
-        // --- SON ETKİNLİKLERİ ANASAYFA GALERİSİNE EKLEME ---
+        // --- SON ETKİNLİKLERİ ANASAYFA GALERİSİNE EKLEME (VİDEO DESTEKLİ) ---
         db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').limit(5).onSnapshot(snapshot => {
             const galeri = document.getElementById('anasayfa-galeri');
-            // Mevcut statik resimleri korumak için innerHTML'i silmiyoruz, sonuna ekliyoruz.
-            // Ama her güncellemede tekrar eklememesi için önce dinamik olanları temizlememiz lazım.
-            // Bu basit bir çözüm: Sadece yeni gelenleri sona ekle.
-            // Daha gelişmiş bir yapı için statik resimleri de JS ile yönetmek gerekir ama şimdilik bu yeterli.
             
-            // Not: Bu kod her güncellemede statik resimlerin altına ekleme yapar.
-            // Temiz bir yapı için "dinamik-galeri-wrapper" ekleyebilirsin ama şimdilik basit tutalım.
-            
+            // Helper: Video mu?
+            function isVideo(url) { return url.match(/\.(mp4|webm|ogg)$/i); }
+
             snapshot.forEach(doc => {
                 const data = doc.data();
                 if(data.kapakResmi) {
-                    const img = document.createElement('img');
-                    img.src = data.kapakResmi;
-                    img.alt = data.baslik;
-                    img.className = "media-item";
-                    img.onclick = function() { showImage(this); };
-                    galeri.appendChild(img);
+                    
+                    if (isVideo(data.kapakResmi)) {
+                        // Video ise
+                        const video = document.createElement('video');
+                        video.src = data.kapakResmi;
+                        video.className = "media-item";
+                        video.controls = true;
+                        galeri.appendChild(video);
+                    } else {
+                        // Resim ise
+                        const img = document.createElement('img');
+                        img.src = data.kapakResmi;
+                        img.alt = data.baslik;
+                        img.className = "media-item";
+                        img.onclick = function() { showImage(this); };
+                        galeri.appendChild(img);
+                    }
                 }
             });
         });
