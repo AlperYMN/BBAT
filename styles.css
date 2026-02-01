@@ -454,7 +454,7 @@ footer {
 
 /* Medya (Resim veya Video) Alanı - KÜÇÜLTÜLDÜ */
 .duyuru-media-container {
-    flex: 0 0 160px; /* Eskiden 280px idi, şimdi 160px (Çok daha küçük) */
+    flex: 0 0 130px; /* Eskiden 280px idi, şimdi 160px (Çok daha küçük) */
     max-width: 30%;  /* Genişlik sınırlaması */
 }
 
