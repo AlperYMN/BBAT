@@ -1,692 +1,379 @@
-/* Genel stil ayarları */
+/* --- GENEL AYARLAR --- */
+:root {
+    --primary-red: #a90000; /* Kastamonu Kırmızısı */
+    --primary-dark: #7f0000;
+    --text-dark: #2d3436;
+    --text-light: #636e72;
+    --bg-light: #f4f6f8;
+    --white: #ffffff;
+    --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.08);
+    --shadow-hover: 0 20px 40px -10px rgba(0,0,0,0.15);
+    --wa-green: #25D366; /* WhatsApp Yeşili */
+    --wa-dark: #075e54;
+}
+
 body {
     font-family: 'Quicksand', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.7;
 }
 
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    color: var(--text-dark);
+}
 
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
 
-/* Başlık (Header) */
+/* --- HEADER --- */
 header {
-    background: linear-gradient(45deg, #004d6a, #66b3cc);
-    color: white;
-    padding: 40px 20px 40px;
-    position: relative;
-    text-align: center;
-    animation: fadeIn 1.5s ease-out;
+    background-color: var(--white);
+    border-bottom: 1px solid #e1e4e8;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.03);
 }
 
-header .unilogo,
-header .toplogo {
-    position: absolute;
-    top: 20px;
-}
-
-header .unilogo {
-    left: 20px;
+.brand-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
+    gap: 15px;
+    flex: 1;
 }
 
-
-header .toplogo {
-    right: 20px;
+.brand-container img {
+    height: 65px;
+    width: auto;
 }
 
-header .toplogo img {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: none;
-    outline: none;
+.site-title h1 {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
 }
 
-
-
-header .unilogo img {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: none;
-    outline: none;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+/* Menü */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-
-
-
-
-
-
-/* Container */
-.duyurular-container {
-    max-width: 1500px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.nav-links ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 25px;
 }
 
-/* Başlık */
-.duyurular h2 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
+.nav-links a {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    position: relative;
+    padding-bottom: 5px;
 }
 
-/* Paragraflar */
-.duyurular p {
-    line-height: 1.6;
-    color: #34495e;
-    margin-bottom: 15px;
+.nav-links a:hover {
+    color: var(--primary-red);
 }
 
-/* Tarihler */
-.duyurular p.meta {
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-red);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Auth Butonları */
+.auth-buttons-container {
+    display: flex;
+    gap: 12px;
+    margin-left: 20px;
+}
+
+.btn {
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
     font-weight: bold;
-    text-decoration: underline;
-    color: #e74c3c;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-red);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(169, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(169, 0, 0, 0.3);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid #e1e4e8;
+    color: var(--text-dark);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+
+/* --- ANA İÇERİK --- */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: 80vh;
+}
+
+/* Hero */
+.hero-wrapper {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    box-shadow: var(--shadow-soft);
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.65);
+    transition: transform 5s ease;
+}
+
+.hero-wrapper:hover .hero-img {
+    transform: scale(1.05);
+}
+
+.hero-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: white;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    color: white;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
     margin-bottom: 10px;
 }
 
-/* Flex container: görsel ve metin yan yana */
-.duyuru-flex {
-    display: flex;
-    align-items: center; /* Dikey ortala */
-    gap: 20px; /* Aralarındaki boşluk */
+/* --- KART TASARIMI --- */
+article, .post, .contact-card {
+    background: var(--white);
+    padding: 40px;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+}
+
+article:hover, .post:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+article h2, .post h2 {
+    color: var(--text-dark);
     margin-bottom: 20px;
-}
-
-/* Görsel */
-.duyuru-img {
-    width: 50%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    flex-shrink: 0;
-    cursor: pointer;
-}
-
-/* Metin alanı */
-.duyuru-text {
-    flex: 1; /* Kalan alanı kaplar */
-}
-
-/* Linkler */
-.duyurular a {
-    color: #2980b9;
-    text-decoration: none;
-}
-
-.duyurular a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive: mobilde metin altına düşer ve ortalanır */
-@media (max-width: 600px) {
-    .duyuru-flex {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    .duyuru-img {
-        width: 80%;
-        margin-bottom: 15px;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-giriş yap butonları ayarları/
-
-.menu-toggle {
-    font-size: 30px;
-    cursor: pointer;
-}
-
-#menu {
-    display: none;
-}
-
-#auth-buttons {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    position: absolute; /* Butonları ekranın altına taşımak için */
-    right: 250px; /* Sağdan hizalama */
-    top: 95px; /* Yukarıdan 80px aşağı kaydırma */
-    padding-right: 20px; /* Sağda biraz boşluk bırakmak için */
-}
-
-#auth-buttons button {
-    background-color: #2196f3;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-#auth-buttons button:hover {
-    background-color: #1976d2;
-}
-
-#auth-buttons.hidden {
-    display: none;
-}
-
-
-
-#auth-buttons {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    position: absolute; /* Butonları ekranın altına taşımak için */
-    right: 300px; /* Sağdan hizalama */
-    top: 95px; /* Yukarıdan 80px aşağı kaydırma */
-    padding-right: 20px; /* Sağda biraz boşluk bırakmak için */
-}
-
-#user-info button {
-    background-color: #2196f3;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-#user-info button:hover {
-    background-color: #1976d2;
-}
-
-#user-info.hidden {
-    display: none;
-}
-
-#user-info {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    position: absolute; /* Butonları ekranın altına taşımak için */
-    right: 300px; /* Sağdan hizalama */
-    top: 95px; /* Yukarıdan 80px aşağı kaydırma */
-    padding-right: 20px; /* Sağda biraz boşluk bırakmak için */
-}
-
-
-
-
-.auth-buttons {
-    display: none;
-}
-
-
-
-
-
-
-
-
-h1 {
-    margin: 0;
-    padding: 10px 0;
-    font-size: 30px;
-    font-family: 'Montserrat', sans-serif;
-    z-index: 1;
-}
-
-/* Sosyal medya simgeleri */
-.social-media {
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.social-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: #ff6347;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease;
-}
-
-.social-icon:hover {
-    background-color: #ff4500;
-}
-
-.social-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.social-icon:hover img {
-    transform: scale(1.1);
-    filter: brightness(1.2);
-}
-
-
-
-
-
-
-
-
-
-
-/* İçerik ve fotoğraf */
-main {
-    width: 80%;
-    margin: 20px auto;
-    padding-bottom: 50px;
-}
-
-article {
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-article h2 {
-    color: #ff6347;
-    border-bottom: 2px solid #ff6347;
-    padding-bottom: 5px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.photo-strip img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-/* Misyon ve Vizyon */
-.mission-vision-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    align-items: stretch;
-    margin-top: 20px;
-}
-
-.mission,
-.vision {
-    flex: 1;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Etkinlik Fotoğrafları */
-.etkinlik-container {
-    overflow: hidden;
-    width: 100%;
+    font-size: 1.6rem;
     position: relative;
+    display: inline-block;
 }
 
-.etkinlik-fotograflar {
+article h2::after, .post h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary-red);
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+.meta {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 20px;
+    display: block;
+    font-weight: 500;
+}
+
+/* --- YENİ WHATSAPP KARTI TASARIMI --- */
+.whatsapp-card {
     display: flex;
+    align-items: center;
+    gap: 25px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+    border: 1px solid #dcfce7;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.2);
+}
+
+.wa-icon img {
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.wa-content {
+    flex: 1;
+}
+
+.wa-content h3 {
+    margin: 0 0 8px 0;
+    color: var(--wa-dark);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.wa-content p {
+    margin: 0;
+    color: #555;
+    font-size: 1rem;
+}
+
+.btn-whatsapp {
+    background-color: var(--wa-green);
+    color: white !important;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    transition: 0.3s;
+    display: inline-block;
     white-space: nowrap;
-    animation: kayma 50s linear infinite;
-    width: max-content;
 }
 
-.etkinlik-fotograflar img {
-    width: 200px;
-    height: auto;
-    margin: 0 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.btn-whatsapp:hover {
+    background-color: #128c7e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
 }
 
-.etkinlik-fotograflar img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+/* Duyuru ve Resimler (Normal) */
+.duyuru-item {
+    padding: 25px;
+    margin-bottom: 25px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    transition: 0.3s;
+}
+
+.duyuru-item:hover {
+    border-color: #ddd;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.duyuru-img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.mission-vision-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
 }
 
 /* Footer */
 footer {
-    background-color: #004d6a;
-    color: white;
+    background-color: #2d3436;
+    color: #dfe6e9;
     text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    left: 0; /* Ekle */
-    right: 0; /* Ekle */
-    bottom: 0;
-    width: 100%;
-    height: 25px;
+    padding: 30px;
+    margin-top: 60px;
+    font-size: 0.9rem;
+    border-top: 4px solid var(--primary-red);
 }
 
-
-
-
-footer p {
-    margin: 0;
-}
-
-
-
-
-
-
-
-/* Hamburger ikonu */
-.menu-toggle {
-    position: absolute;
-    bottom: 3px;
-    left: 150px;
-    font-size: 25px;
-    cursor: pointer;
-    z-index: 1000;
-    background-color: white;
-    color: #004d6a;
-    border: 2px solid #004d6a;
-    border-radius: 5px;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Menü paneli */
-.menu {
-    position: absolute;
-    top: 95px;
-    left: 200px;
-    background-color: white;
-    border: 2px solid #004d6a;
-    border-radius: 8px;
-    padding: 10px 20px;
-    display: none;
-    z-index: 999;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.menu ul li {
-    margin: 10px 0;
-}
-
-.menu ul li a {
-    text-decoration: none;
-    color: #004d6a;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.menu ul li a:hover {
-    text-decoration: underline;
-}
-
-
-.auth-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: flex-end;
-    margin-top: 10px;
-    flex-wrap: wrap;
-}
-
-
-
-
-
-
-/* Fade-in animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+/* Mobil */
+@media (max-width: 900px) {
+    header { padding: 15px; }
+    .menu-toggle { display: block; }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; width: 100%;
+        background: var(--white);
+        flex-direction: column; padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-top: 3px solid var(--primary-red);
     }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes kayma {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-/* Mobil uyum */
-@media screen and (max-width: 768px) {
-    header {
-        padding: 20px 10px 30px;
-    }
-
-    header .toplogo img {
-        height: 60px;
-        width: 60px;
-    }
-
-    header .unilogo {
-        left: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-    }
-
-    header .unilogo img {
-        height: 60px;
-        width: 60px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: none;
-        outline: none;
-        display: block;
-        margin: 0 auto;
-        box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    }
-
-
-    @media screen and (max-width: 768px) {
-        /* Hamburger ikonu mobil uyum */
-        .menu-toggle {
-            left: 35px;
-            bottom: 5px;
-            width: 25px;
-            height: 25px;
-            font-size: 16px;
-        }
+    .nav-links.active { display: flex; }
+    .nav-links ul { flex-direction: column; width: 100%; text-align: center; }
+    .brand-container img { height: 40px; }
+    .site-title h1 { font-size: 0.8rem; }
+    .mission-vision-container { grid-template-columns: 1fr; }
+    .auth-buttons-container { flex-direction: column; width: 100%; }
+    .btn { width: 100%; }
+    .hero-content h1 { font-size: 1.8rem; }
     
-        /* Menü paneli mobil uyum */
-        .menu {
-            top: 150px;
-            left: 70px;
-            right: 10px;
-            width: calc(30% - 5px);
-            border-radius: 5px;
-            padding: 10px;
-        }
-    
-        .menu ul li {
-            margin: 15px 0;
-            text-align: center;
-        }
-    
-        .menu ul li a {
-            font-size: 13px;
-        }
-    }
-    
-
-    
-    
-    h1 {
-        font-size: 17px;
-        margin-left: 80px;
-        margin-right: 80px;
-    }
-
-    .social-media {
-        gap: 20px; /* Çok büyük gap yerine daha uygun bir boşluk */
-        margin-top: 10000px; /* İstediğin kadar yukarı alabilirsin */
-        margin-left: auto;
-        margin-right: auto; /* Orta hizalama */
-        position: relative; /* position absolute yerine relative kullan */
-        z-index: 9999999;
-        padding: 0 10px;
-        flex-wrap: wrap;
-        display: flex;
-        justify-content: center;
-        align-items: center; /* İçerikleri ortalar */
-    }
-    
-    .social-icon {
-        width: 30px; /* Görsellerin boyutunu biraz büyütmeyi deneyebilirsin */
-        height: 30px;
-    }
-    
-
-    main {
-        width: 90%;
-    }
-    
-    article {
-        margin-top: 10px;  
-    }    
-
-
-
-
-
-
-    article {
-        padding: 15px;
-    }
-
-    .mission-vision-container {
+    /* WhatsApp Mobil */
+    .whatsapp-card {
         flex-direction: column;
-        align-items: center;
+        text-align: center;
+        padding: 20px;
     }
-
-    .mission,
-    .vision {
+    .btn-whatsapp {
         width: 100%;
-        margin-bottom: 20px;
-    }
-
-    /* Mobilde etkinlik fotoğrafları yatay kalsın */
-    .etkinlik-fotograflar img {
-        width: 150px;
-        height: auto;
-        margin: 0 5px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .social-media {
-        margin-top: 10px;
-        gap: 10px;
-        padding: 0 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .social-icon {
-        width: 30px;
-        height: 30px;
-    }
-
-    .social-icon img {
-        width: 80%;
-        height: 80%;
-    }
-}
-
-
-
-@media (max-width: 768px) {
-    #user-info {
-        position: absolute; /* Sabit hale getirilmesi, mobilde ekran kayması önlenir */
-        right: 15px; /* Sağdan daha az mesafe */
-        top: 105px; /* Üstten daha kısa mesafe */
-        padding-right: 5px; /* Sağdaki boşluğu kısaltma */
-        flex-direction: column; /* Dikey hizalama */
-        gap: 10px; /* Butonlar arasındaki boşluk */
-    }
-    
-    #user-info button {
-        padding: 2px 4px; /* Butonun boyutlarını küçültme */
-        font-size: 14px; /* Yazı boyutunu küçük ekran için uygun hale getirme */
-    }
-}
-
-@media (max-width: 768px) {
-    #auth-buttons,
-    #user-info {
-        position: static; /* Mutlak konumlandırmadan çık */
-        display: flex;
-        flex-direction: column; /* Dikey hizalama */
-        align-items: center; /* Ortala */
-        justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
-        margin-left: 12px;
-    }
-
-    #auth-buttons button,
-    #user-info button {
-        padding: 8px 12px;
-        font-size: 14px;
-        width: 120px; /* Genişliği sabitleyerek hizalı görünmesini sağlar */
+        box-sizing: border-box;
     }
 }
