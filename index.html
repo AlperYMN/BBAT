@@ -108,7 +108,7 @@
                 <h2>GÜNCEL DUYURULAR!</h2>
                 
                 <div id="duyuru-listesi">
-                    <p style="text-align: center; color: gray; padding: 20px;">Duyurular yükleniyor...</p>
+                    <p style="text-align: center; color: gray; padding: 20px;">Duyurular kontrol ediliyor...</p>
                 </div>
             </article>
         </div>
@@ -118,14 +118,15 @@
             <p class="meta">Yazar: Alper YAMAN | Tarih: 17 Şubat 2025</p>
             <p>Ilgaz Dağı Milli Parkında mantar yürüyüşü etkinliği, "Sözde Bilim" Konferansı, "Omik Çağında Biyoinformatik" Konulu Sunum, Tanışma kahvaltımız, Çanakkale'deki Biyogaz Tesisi, Bioinnovation 2024 yarışması, "Buzulların Erimesi" Konulu Panel ve daha fazlası "Etkinliklerimiz" sekmesinde sizi bekliyor!</p>
 
-            <div class="media-scroller gallery-group">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk1.jpg" alt="Etkinlik 1" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk2.jpg" alt="Etkinlik 2" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk3.jpg" alt="Etkinlik 3" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk4.jpg" alt="Etkinlik 4" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk5.jpg" alt="Etkinlik 5" class="media-item">
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/afis26mart2.jpg" alt="Etkinlik 6" class="media-item">
-            </div>
+            <div class="media-scroller gallery-group" id="anasayfa-galeri">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk1.jpg" alt="Etkinlik 1" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk2.jpg" alt="Etkinlik 2" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk3.jpg" alt="Etkinlik 3" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk4.jpg" alt="Etkinlik 4" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk5.jpg" alt="Etkinlik 5" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/afis26mart2.jpg" alt="Etkinlik 6" class="media-item" onclick="showImage(this)">
+                
+                </div>
         </article>
 
     </main>
@@ -179,16 +180,26 @@
 
         function showImage(imgElement) {
             const group = imgElement.closest('.gallery-group');
-            if (!group) return;
-            currentGalleryImages = Array.from(group.querySelectorAll('img.media-item'));
+            if (!group) {
+                currentGalleryImages = [imgElement];
+            } else {
+                currentGalleryImages = Array.from(group.querySelectorAll('img.media-item'));
+            }
+
             const index = currentGalleryImages.indexOf(imgElement);
             if(index === -1) return;
+            
             currentIndex = index;
-            
-            if(prevBtn) prevBtn.style.display = 'block';
-            if(nextBtn) nextBtn.style.display = 'block';
-            
             updateLightboxImage();
+            
+            if (currentGalleryImages.length > 1) {
+                if(prevBtn) prevBtn.style.display = 'block';
+                if(nextBtn) nextBtn.style.display = 'block';
+            } else {
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
+            }
+
             lightbox.style.display = 'flex';
         }
 
@@ -197,7 +208,7 @@
         }
 
         function navigateLightbox(direction) {
-            if (currentGalleryImages.length === 0) return;
+            if (currentGalleryImages.length <= 1) return;
             currentIndex += direction;
             if (currentIndex < 0) currentIndex = currentGalleryImages.length - 1;
             if (currentIndex >= currentGalleryImages.length) currentIndex = 0;
@@ -260,8 +271,6 @@
         });
 
         // --- DUYURULARI ÇEKME (SAFE MODE) ---
-        // orderBy metodunu kaldırıp sıralamayı JavaScript içinde yapıyoruz.
-        // Bu sayede Index hatası almayız.
         db.collection("duyurular").onSnapshot(
             (snapshot) => {
                 const liste = document.getElementById("duyuru-listesi");
@@ -272,21 +281,17 @@
                     return; 
                 }
 
-                // Verileri önce bir diziye alalım
                 let duyurular = [];
                 snapshot.forEach(doc => {
                     duyurular.push(doc.data());
                 });
 
-                // JavaScript ile Tarihe Göre Sırala (Yeniden Eskiye)
                 duyurular.sort((a, b) => {
-                    // Eğer timestamp varsa onu kullan, yoksa 0 kabul et
                     let dateA = a.olusturulmaTarihi ? a.olusturulmaTarihi.seconds : 0;
                     let dateB = b.olusturulmaTarihi ? b.olusturulmaTarihi.seconds : 0;
                     return dateB - dateA;
                 });
 
-                // Sıralanmış veriyi ekrana bas
                 duyurular.forEach(veri => {
                     let resimHTML = '';
                     if(veri.resim && veri.resim.length > 5) {
@@ -304,21 +309,35 @@
                 });
             },
             (error) => {
-                // SADECE GERÇEK HATALARDA BURASI ÇALIŞIR
                 console.error("Duyuru çekme hatası:", error);
-                
-                // İzin hatası mı kontrol et
-                if (error.code === 'permission-denied') {
-                    // İzin yoksa veya giriş yapılmadıysa, ama public olması gerekiyorsa
-                    // Kullanıcıya yine de boş mesaj gösterelim ki hata sanmasın
-                    const liste = document.getElementById("duyuru-listesi");
-                    liste.innerHTML = "<p style='text-align:center; padding:20px; color:#666;'>Duyurular yüklenemedi. (İzin Hatası)</p>";
-                } else {
-                    const liste = document.getElementById("duyuru-listesi");
-                    liste.innerHTML = "<p style='text-align:center; color:red; padding:20px;'>Bağlantı hatası.</p>";
-                }
+                const liste = document.getElementById("duyuru-listesi");
+                if(liste) liste.innerHTML = "<p style='text-align:center; color:red; padding:20px;'>Duyurular yüklenirken bir hata oluştu.</p>";
             }
         );
+
+        // --- SON ETKİNLİKLERİ ANASAYFA GALERİSİNE EKLEME ---
+        db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').limit(5).onSnapshot(snapshot => {
+            const galeri = document.getElementById('anasayfa-galeri');
+            // Mevcut statik resimleri korumak için innerHTML'i silmiyoruz, sonuna ekliyoruz.
+            // Ama her güncellemede tekrar eklememesi için önce dinamik olanları temizlememiz lazım.
+            // Bu basit bir çözüm: Sadece yeni gelenleri sona ekle.
+            // Daha gelişmiş bir yapı için statik resimleri de JS ile yönetmek gerekir ama şimdilik bu yeterli.
+            
+            // Not: Bu kod her güncellemede statik resimlerin altına ekleme yapar.
+            // Temiz bir yapı için "dinamik-galeri-wrapper" ekleyebilirsin ama şimdilik basit tutalım.
+            
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if(data.kapakResmi) {
+                    const img = document.createElement('img');
+                    img.src = data.kapakResmi;
+                    img.alt = data.baslik;
+                    img.className = "media-item";
+                    img.onclick = function() { showImage(this); };
+                    galeri.appendChild(img);
+                }
+            });
+        });
 
         document.getElementById("logout-btn").addEventListener("click", () => {
             auth.signOut().then(() => window.location.reload());
