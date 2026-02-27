@@ -3,129 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş Yap - BBAT</title>
+    <title>BBAT - Anasayfa</title>
     <link rel="icon" href="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Quicksand:wght@400&display=swap" rel="stylesheet">
     
     <style>
-        .auth-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-            padding: 20px;
+        /* Lightbox & Galeri Stilleri */
+        .lightbox-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); display: none;
+            justify-content: center; align-items: center; z-index: 9999;
         }
-        .auth-card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-soft);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
+        .lightbox-overlay img {
+            max-width: 90%; max-height: 90%; border: 5px solid white; border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .auth-card h2 {
-            color: var(--primary-red);
-            margin-bottom: 25px;
+        .lightbox-controls {
+            position: absolute; top: 50%; width: 100%; display: flex;
+            justify-content: space-between; transform: translateY(-50%); pointer-events: none;
         }
-        .auth-form input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: 0.3s;
+        .lightbox-controls button {
+            background: rgba(255, 255, 255, 0.1); color: white; border: none;
+            font-size: 3rem; padding: 20px; cursor: pointer; pointer-events: auto;
+            transition: background 0.3s;
         }
-        .auth-form input:focus {
-            border-color: var(--primary-red);
-            outline: none;
-            box-shadow: 0 0 5px rgba(169,0,0,0.2);
+        .lightbox-controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
-        .auth-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary-red);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+
+        /* Yatay Kaydırma Şeridi */
+        .media-scroller {
+            display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; margin: 20px 0;
+            scrollbar-width: thin; scrollbar-color: #a90000 #eee;
         }
-        .auth-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(169,0,0,0.2);
+        .media-scroller::-webkit-scrollbar { height: 8px; }
+        .media-scroller::-webkit-scrollbar-thumb { background-color: #a90000; border-radius: 4px; }
+        
+        .media-item {
+            height: 180px; width: auto; border-radius: 8px; flex-shrink: 0; cursor: pointer;
+            transition: transform 0.2s; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #000;
         }
-        .forgot-pw {
-            display: block;
-            margin-top: 15px;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .forgot-pw:hover {
-            color: var(--primary-red);
-            text-decoration: underline;
-        }
-        .register-link {
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-        .register-link a {
-            color: var(--primary-red);
-            font-weight: bold;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
+        .media-item:hover { transform: scale(1.02); }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="brand-container">
-            <a href="index.html" style="display: flex; align-items: center; gap: 15px;">
-                <img src="https://github.com/Riwelda/BBAT/blob/main/unilogo.jpg?raw=true" alt="Kastamonu Üni Logo">
-                <div class="site-title" style="text-align:center;">
-                    <h1>BİYOLOJİK BİLİMLER<br>ARAŞTIRMA TOPLULUĞU</h1>
-                </div>
-                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" alt="BBAT Logo">
-            </a>
+            <img src="https://github.com/Riwelda/BBAT/blob/main/unilogo.jpg?raw=true" alt="Kastamonu Üni Logo">
+            <div class="site-title" style="margin: 0 15px; text-align:center;">
+                <h1>BİYOLOJİK BİLİMLER<br>ARAŞTIRMA TOPLULUĞU</h1>
+            </div>
+            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/pngikologo.png" alt="BBAT Logo">
         </div>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
         <nav class="nav-links" id="nav-links">
             <ul>
                 <li><a href="index.html">Anasayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                <li><a href="projeler.html">Etkinlikler</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
             </ul>
+            <div class="auth-buttons-container">
+                <div id="auth-buttons" style="display: flex; gap: 10px;">
+                    <button id="login-btn" class="btn btn-outline">Giriş Yap</button>
+                    <button id="signup-btn" class="btn btn-primary">Kayıt Ol</button>
+                </div>
+                <div id="user-info" style="display: none; align-items: center; gap: 10px;">
+                    <span id="welcome-text" style="font-weight: bold; color: #a90000; font-size: 0.9rem;"></span>
+                    <button id="logout-btn" class="btn btn-primary" style="background-color: #333;">Çıkış</button>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main class="auth-wrapper">
-        <div class="auth-card">
-            <h2>Giriş Yap</h2>
-            <form id="login-form" class="auth-form">
-                <input type="email" id="login-email" placeholder="E-posta Adresiniz" required>
-                <input type="password" id="login-password" placeholder="Şifreniz" required>
-                <button type="submit" class="auth-btn">Giriş Yap</button>
-            </form>
-            
-            <a id="forgot-password" class="forgot-pw">Şifremi Unuttum</a>
-            
-            <div class="register-link">
-                Hesabınız yok mu? <a href="register.html">Kayıt Ol</a>
+    <main>
+        <div class="hero-wrapper">
+            <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/fenfak.jpeg" alt="Kastamonu Üniversitesi" class="hero-img">
+            <div class="hero-content">
+                <h1>Doğayı Keşfet, Bilimle Koru.</h1>
+                <p>Kastamonu Üniversitesi Biyolojik Bilimler Araştırma Topluluğu</p>
             </div>
         </div>
+        
+        <div class="duyurular-container">
+            <div class="whatsapp-card">
+                <div class="wa-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                </div>
+                <div class="wa-content">
+                    <h3>BBAT WhatsApp Kanalı Açıldı!</h3>
+                    <p>Duyurular, anketler ve etkinliklerden anında haberdar olmak için kanalımıza katılın.</p>
+                </div>
+                <div class="wa-action">
+                    <a href="https://whatsapp.com/channel/0029VbAhiY9AInPi7ie7e02H" target="_blank" class="btn-whatsapp">
+                        Kanalı Görüntüle
+                    </a>
+                </div>
+            </div>
+
+            <article class="duyurular">
+                <h2>GÜNCEL DUYURULAR!</h2>
+                <div id="duyuru-listesi">
+                    <p style="text-align: center; color: gray; padding: 20px;">Duyurular yükleniyor...</p>
+                </div>
+            </article>
+        </div>
+        
+        <article class="etkinlik-onizleme">
+            <h2>Etkinliklerimizin Birkaçı...</h2>
+            <p class="meta">Yazar: Alper YAMAN | Tarih: 17 Şubat 2025</p>
+            <p>Ilgaz Dağı Milli Parkında mantar yürüyüşü etkinliği, "Sözde Bilim" Konferansı, "Omik Çağında Biyoinformatik" Konulu Sunum, Tanışma kahvaltımız, Çanakkale'deki Biyogaz Tesisi, Bioinnovation 2024 yarışması, "Buzulların Erimesi" Konulu Panel ve daha fazlası "Etkinliklerimiz" sekmesinde sizi bekliyor!</p>
+
+            <div class="media-scroller gallery-group" id="anasayfa-galeri">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk1.jpg" alt="Etkinlik 1" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk2.jpg" alt="Etkinlik 2" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk3.jpg" alt="Etkinlik 3" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk4.jpg" alt="Etkinlik 4" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/etk5.jpg" alt="Etkinlik 5" class="media-item" onclick="showImage(this)">
+                <img src="https://raw.githubusercontent.com/Riwelda/BBAT/refs/heads/main/afis26mart2.jpg" alt="Etkinlik 6" class="media-item" onclick="showImage(this)">
+                
+                </div>
+        </article>
+
     </main>
+
+    <footer>
+        <p>&copy; 2025 BBAT, Kastamonu Üniversitesine Bağlı Bir Öğrenci Topluluğudur.</p>
+    </footer>
+
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-controls">
+            <button id="prev-btn">&#10094;</button>
+            <button id="next-btn">&#10095;</button>
+        </div>
+        <img id="lightbox-img" src="" alt="Büyütülmüş Görsel">
+    </div>
+
+    <script>
+        // Menü
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
+        }
+
+        // Yönlendirmeler
+        document.getElementById("signup-btn").addEventListener("click", () => window.location.href = "register.html");
+        document.getElementById("login-btn").addEventListener("click", () => window.location.href = "login.html");
+
+        // --- GALERİ MANTIĞI ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentGalleryImages = [];
+        let currentIndex = 0;
+
+        // Statik resimler için
+        document.querySelectorAll('img.media-item').forEach(img => {
+            img.addEventListener('click', () => showImage(img));
+        });
+
+        // Dinamik resimler için (Function)
+        window.openDynamicLightbox = function(src) {
+            if(lightbox && lightboxImg) {
+                lightboxImg.src = src;
+                lightbox.style.display = 'flex';
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
+            }
+        }
+
+        function showImage(imgElement) {
+            const group = imgElement.closest('.gallery-group');
+            if (!group) {
+                currentGalleryImages = [imgElement];
+            } else {
+                currentGalleryImages = Array.from(group.querySelectorAll('img.media-item'));
+            }
+
+            const index = currentGalleryImages.indexOf(imgElement);
+            if(index === -1) return;
+            
+            currentIndex = index;
+            updateLightboxImage();
+            
+            if (currentGalleryImages.length > 1) {
+                if(prevBtn) prevBtn.style.display = 'block';
+                if(nextBtn) nextBtn.style.display = 'block';
+            } else {
+                if(prevBtn) prevBtn.style.display = 'none';
+                if(nextBtn) nextBtn.style.display = 'none';
+            }
+
+            lightbox.style.display = 'flex';
+        }
+
+        function updateLightboxImage() {
+            lightboxImg.src = currentGalleryImages[currentIndex].src;
+        }
+
+        function navigateLightbox(direction) {
+            if (currentGalleryImages.length <= 1) return;
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = currentGalleryImages.length - 1;
+            if (currentIndex >= currentGalleryImages.length) currentIndex = 0;
+            updateLightboxImage();
+        }
+
+        if(prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(-1); });
+        if(nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
+        if(lightbox) lightbox.addEventListener('click', () => { lightbox.style.display = 'none'; currentGalleryImages = []; });
+    </script>
 
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
     <script>
         const firebaseConfig = {
@@ -137,51 +234,154 @@
 
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const auth = firebase.auth();
-        
-        // E-postaların Türkçe gitmesi için dil ayarı
-        auth.languageCode = 'tr';
+        const db = firebase.firestore();
 
-        // --- GİRİŞ YAPMA İŞLEMİ ---
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-password').value;
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const welcomeText = document.getElementById('welcome-text');
+        const navUl = document.querySelector('.nav-links ul');
 
-            auth.signInWithEmailAndPassword(email, pass)
-                .then((userCredential) => {
-                    window.location.href = "index.html"; // Başarılıysa anasayfaya dön
-                })
-                .catch((error) => {
-                    let mesaj = "Giriş başarısız.";
-                    if(error.code === 'auth/user-not-found') mesaj = "Bu e-posta ile kayıtlı kullanıcı bulunamadı.";
-                    if(error.code === 'auth/wrong-password') mesaj = "Hatalı şifre girdiniz.";
-                    if(error.code === 'auth/invalid-credential') mesaj = "E-posta veya şifre hatalı.";
-                    alert(mesaj);
-                });
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                authButtons.style.display = 'none';
+                userInfo.style.display = 'flex';
+
+                const adminEmail = "alperymnay@gmail.com"; 
+                if(user.email === adminEmail) {
+                    if(!document.getElementById('admin-link')) {
+                        const li = document.createElement('li');
+                        li.innerHTML = '<a href="admin.html" id="admin-link" style="color:red; font-weight:bold;">YÖNETİM</a>';
+                        navUl.appendChild(li);
+                    }
+                }
+
+                try {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    let username = user.email.split('@')[0];
+                    if (userDoc.exists && userDoc.data().username) username = userDoc.data().username;
+                    welcomeText.textContent = `Merhaba, ${username}`;
+                } catch (error) {
+                    welcomeText.textContent = `Merhaba, ${user.email.split('@')[0]}`;
+                }
+            } else {
+                authButtons.style.display = 'flex';
+                userInfo.style.display = 'none';
+                if(document.getElementById('admin-link')) document.getElementById('admin-link').parentElement.remove();
+            }
         });
 
-        // --- ŞİFRE SIFIRLAMA İŞLEMİ ---
-        document.getElementById('forgot-password').addEventListener('click', () => {
-            const emailInput = document.getElementById('login-email').value;
-            
-            // Kullanıcı e-posta kutusuna bir şey yazmış mı kontrol et
-            if (!emailInput) {
-                alert("Lütfen şifresini sıfırlamak istediğiniz e-posta adresini üstteki kutuya yazın ve tekrar 'Şifremi Unuttum' yazısına tıklayın.");
-                document.getElementById('login-email').focus();
-                return;
-            }
+        // --- DUYURULARI ÇEKME (VİDEO & YAN YANA TASARIM DESTEKLİ) ---
+        db.collection("duyurular").onSnapshot(
+            (snapshot) => {
+                const liste = document.getElementById("duyuru-listesi");
+                if(!liste) return;
+                
+                liste.innerHTML = ""; 
 
-            // Firebase'den sıfırlama maili gönder
-            auth.sendPasswordResetEmail(emailInput)
-                .then(() => {
-                    alert("✅ Şifre sıfırlama bağlantısı e-posta adresinize gönderildi!\n\n(Eğer maili göremiyorsanız 'Gereksiz/Spam' kutunuzu kontrol etmeyi unutmayın.)");
-                })
-                .catch((error) => {
-                    let mesaj = "Bir hata oluştu: " + error.message;
-                    if(error.code === 'auth/user-not-found') mesaj = "Bu e-posta adresiyle kayıtlı bir hesap bulunamadı.";
-                    if(error.code === 'auth/invalid-email') mesaj = "Lütfen geçerli bir e-posta adresi girin.";
-                    alert(mesaj);
+                if(snapshot.empty) { 
+                    liste.innerHTML = "<p style='text-align:center; padding:20px; color:#666;'>Henüz güncel bir duyuru yok.</p>"; 
+                    return; 
+                }
+
+                let duyurular = [];
+                snapshot.forEach(doc => { duyurular.push(doc.data()); });
+
+                // Yeniden eskiye sırala
+                duyurular.sort((a, b) => {
+                    let dateA = a.olusturulmaTarihi ? a.olusturulmaTarihi.seconds : 0;
+                    let dateB = b.olusturulmaTarihi ? b.olusturulmaTarihi.seconds : 0;
+                    return dateB - dateA;
                 });
+
+                // Helper: Video mu?
+                function isVideo(url) {
+                    return url.match(/\.(mp4|webm|ogg)/i);
+                }
+
+                duyurular.forEach(veri => {
+                    let medyaHTML = '';
+                    
+                    // Eğer medya varsa HTML'ini hazırla
+                    if(veri.resim && veri.resim.length > 5) {
+                        if (isVideo(veri.resim)) {
+                            // --- GIF GİBİ VİDEO AYARLARI ---
+                            // autoplay: Otomatik başla
+                            // muted: Sessiz ol (Tarayıcıların otomatik oynatması için şart)
+                            // loop: Sürekli başa sar
+                            // playsinline: Mobilde tam ekran olma, olduğu yerde oyna
+                            medyaHTML = `
+                            <div class="duyuru-media-container">
+                                <video autoplay muted loop playsinline class="duyuru-media">
+                                    <source src="${veri.resim}" type="video/mp4">
+                                </video>
+                            </div>`;
+                        } else {
+                            // RESİM İSE
+                            medyaHTML = `
+                            <div class="duyuru-media-container">
+                                <img src="${veri.resim}" class="duyuru-media" onclick="openDynamicLightbox(this.src)" style="cursor:pointer;">
+                            </div>`;
+                        }
+                    } else {
+                        // Medya yoksa boş bir container koy ki hizalama bozulmasın (İsteğe bağlı kaldırılabilir)
+                        medyaHTML = `<div class="duyuru-media-container" style="display:none;"></div>`;
+                    }
+
+                    // YENİ HTML YAPISI (Yan Yana Düzen)
+                    const duyuruHTML = `
+                        <div class="duyuru-item">
+                            <span class="meta" style="color:#a90000; font-weight:bold; display:block; margin-bottom:10px;">📅 ${veri.tarih}</span>
+                            
+                            <div class="duyuru-content-wrapper">
+                                ${medyaHTML}
+                                
+                                <div class="duyuru-text">
+                                    <p style="white-space: pre-wrap;">${veri.icerik}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    liste.innerHTML += duyuruHTML;
+                });
+            },
+            (error) => {
+                console.error("Duyuru çekme hatası:", error);
+                const liste = document.getElementById("duyuru-listesi");
+                if(liste) liste.innerHTML = "<p style='text-align:center; color:red; padding:20px;'>Duyurular yüklenirken bir hata oluştu.</p>";
+            }
+        );
+        // --- SON ETKİNLİKLERİ ANASAYFA GALERİSİNE EKLEME (VİDEO DESTEKLİ) ---
+        db.collection('etkinlikler').orderBy('olusturulmaTarihi', 'desc').limit(5).onSnapshot(snapshot => {
+            const galeri = document.getElementById('anasayfa-galeri');
+            
+            // Helper: Video mu?
+            function isVideo(url) { return url.match(/\.(mp4|webm|ogg)$/i); }
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if(data.kapakResmi) {
+                    
+                    if (isVideo(data.kapakResmi)) {
+                        // Video ise
+                        const video = document.createElement('video');
+                        video.src = data.kapakResmi;
+                        video.className = "media-item";
+                        video.controls = true;
+                        galeri.appendChild(video);
+                    } else {
+                        // Resim ise
+                        const img = document.createElement('img');
+                        img.src = data.kapakResmi;
+                        img.alt = data.baslik;
+                        img.className = "media-item";
+                        img.onclick = function() { showImage(this); };
+                        galeri.appendChild(img);
+                    }
+                }
+            });
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            auth.signOut().then(() => window.location.reload());
         });
     </script>
 </body>
